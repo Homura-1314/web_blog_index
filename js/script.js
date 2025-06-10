@@ -83,24 +83,56 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 1. 一言(Hitokoto) API
-    const hitokotoContainer = document.getElementById('hitokoto-container');
+    const hitokotoContainer = document.querySelector('.hitokoto-container');
     if (hitokotoContainer) {
-        const fetchHitokoto = () => {
-            const hitokotoText = document.getElementById('hitokoto-text');
-            const hitokotoFrom = document.getElementById('hitokoto-from');
-            hitokotoText.style.opacity = 0;
-            fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c')
-                .then(response => response.json())
-                .then(data => {
-                    hitokotoText.textContent = `“${data.hitokoto}”`;
-                    hitokotoFrom.textContent = `——《${data.from}》`;
-                    hitokotoText.style.opacity = 1;
-                })
-                .catch(console.error);
-        };
-        fetchHitokoto();
-        hitokotoContainer.addEventListener('click', fetchHitokoto);
-    }
+    const textEl = document.getElementById('hitokoto-text');
+    const fromEl = document.getElementById('hitokoto-from');
+    const copyBtn = document.getElementById('copy-hitokoto');
+    const refreshBtn = document.getElementById('refresh-hitokoto');
+    
+    const fetchHitokoto = () => {
+        // 1. 在请求开始前，明确显示“正在加载”
+        textEl.style.opacity = 0.5; // 让旧的句子变淡，或直接显示加载文字
+        textEl.textContent = '正在加载一言...';
+        fromEl.textContent = ''; // 清空来源
+
+        // 2. 使用更稳定的国际版API接口
+        fetch('https://international.v1.hitokoto.cn')
+            .then(response => {
+                // 3. 检查网络响应是否成功
+                if (!response.ok) {
+                    throw new Error('网络响应错误，状态码: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 4. 成功获取数据后，更新UI
+                textEl.style.opacity = 1;
+                textEl.textContent = `“${data.hitokoto}”`;
+                fromEl.textContent = `—— ${data.from_who || ''}《${data.from}》`;
+            })
+            .catch(error => {
+                // 5. 【关键】如果请求失败，明确告知用户
+                console.error('获取一言失败:', error);
+                textEl.style.opacity = 1;
+                textEl.textContent = '一言加载失败，请稍后再试 T_T';
+            });
+    };
+    
+    // 复制和刷新按钮的事件监听器保持不变
+    copyBtn.addEventListener('click', () => {
+        // 过滤掉加载失败的提示文字
+        if (textEl.textContent.includes('加载失败')) return;
+        navigator.clipboard.writeText(textEl.textContent)
+            .then(() => alert('已复制到剪贴板！'))
+            .catch(err => console.error('复制失败: ', err));
+    });
+
+    refreshBtn.addEventListener('click', fetchHitokoto);
+
+    // 页面加载时自动获取第一条
+    fetchHitokoto();
+}
 
     const slideshowContainer = document.getElementById("slideshow-container");
     if (slideshowContainer) {
@@ -194,80 +226,80 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         type();
     }
-    const aplayerContainer = document.getElementById("aplayer");
+    const aplayerContainer = document.getElementById('aplayer');
+    if (aplayerContainer && typeof APlayer !== 'undefined') {
 
-    // 只有在页面上找到了播放器的容器时，才执行所有相关逻辑
-    if (aplayerContainer) {
-        // --- API 配置 ---
-        const apiServer = 'netease';
-        const playlistId = '7747893098';
-        const apiUrl = `https://api.i-meto.com/meting/api?server=${apiServer}&type=playlist&id=${playlistId}`;
+    aplayerContainer.innerHTML = '<p style="text-align:center; color: #fff; padding: 20px;">正在从次元云加载音乐...</p>';
+    const metingApiUrl = 'https://api.i-meto.com/meting/api?server=netease&type=playlist&id=7747893098'; 
+    fetch(metingApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (!data || data.length === 0) {
+                throw new Error("API返回的播放列表为空");
+            }
 
-        // Plan B: 使用适配MetingJS的初始化函数
-        function initializeAPlayer(playlistData) {
-            const aplayerSongs = playlistData.map(song => ({
-                name: song.name,
-                artist: song.artist,
-                url: song.url,
-                cover: song.pic,
-                lrc: song.lrc
-            }));
-            
+            aplayerContainer.innerHTML = '';
+
             const ap = new APlayer({
-                container: document.getElementById('aplayer'),
+                container: aplayerContainer,
                 fixed: true,
                 lrcType: 3,
-                audio: aplayerSongs,
-                storageName: 'aplayer-setting'
+                audio: data,
+                autoplay: false
             });
 
-            ap.list.switch(0);
-            ap.pause();
-        }
-        function fetchPlaylistAndInit() {
-            aplayerContainer.innerHTML =
-            '<p style="color:white; padding: 1rem;">正在从次元空间加载音乐...</p>';
-            fetch(apiUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data && data.length > 0) {
-                aplayerContainer.innerHTML = "";
-                initializeAPlayer(data);
-                } else {
-                aplayerContainer.innerHTML =
-                    '<p style="color:white; padding: 1rem;">歌单加载失败或为空。</p>';
+            // --- 状态恢复与保存的核心逻辑 (最终版) ---
+            
+            // 标记是否已经从sessionStorage恢复过状态
+            let hasRestored = false; 
+
+            // 1. 监听'canplay'事件，这是恢复进度的最佳时机
+            ap.on('canplay', () => {
+                // 如果还没有恢复过状态，就执行恢复操作
+                if (!hasRestored) {
+                    const lastState = JSON.parse(sessionStorage.getItem('aplayerState'));
+                    if (lastState) {
+                        // 检查歌曲索引是否匹配，防止恢复到错误的歌曲上
+                        if (ap.list.index === lastState.index) {
+                            ap.seek(lastState.time);
+                            if (lastState.isPlaying) {
+                                ap.play();
+                            }
+                        }
+                    }
+                    // 标记为已恢复，这样下次触发canplay时就不会再执行了
+                    hasRestored = true;
                 }
-            })
-            .catch((error) => {
-                console.error("获取歌单失败:", error);
-                aplayerContainer.innerHTML =
-                '<p style="color:white; padding: 1rem;">网络错误，无法连接API。</p>';
             });
-      }
-    //    备用api方案
-    //    // --- 函数定义 ---
-    //   function initializeAPlayer(apiResponse) {
-    //     const playlistData = apiResponse.songs;
-    //     const aplayerSongs = playlistData.map((song) => ({
-    //       name: song.name,
-    //       artist: song.ar.map((artist) => artist.name).join(" / "),
-    //       url: `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`,
-    //       cover: song.al.picUrl,
-    //       lrc: "",
-    //     }));
 
-    //     const ap = new APlayer({
-    //       container: aplayerContainer, // 直接使用外层已获取的变量
-    //       fixed: true,
-    //       lrcType: 1,
-    //       audio: aplayerSongs,
-    //       storageName: "aplayer-setting",
-    //     });
+            // 2. 切换歌曲时，需要重置'hasRestored'标记
+            ap.on('listswitch', () => {
+                hasRestored = false;
+            });
 
-    //     ap.list.switch(0);
-    //     ap.pause();
-    // --- 启动 ---
-      // 将启动调用的也放在 if 内部
-      fetchPlaylistAndInit();
-    }
+            // 3. 保存播放状态的逻辑
+            const savePlayerState = () => {
+                if(ap.audio.HAVE_CURRENT_DATA) {
+                    const state = {
+                        index: ap.list.index,
+                        time: ap.audio.currentTime,
+                        isPlaying: !ap.audio.paused
+                    };
+                    sessionStorage.setItem('aplayerState', JSON.stringify(state));
+                }
+            };
+            
+            // 在关键事件上保存状态
+            ap.on('play', savePlayerState);
+            ap.on('pause', savePlayerState);
+            window.addEventListener('beforeunload', savePlayerState);
+            // 定时器可以更频繁地保存进度，但可能会有性能开销，3-5秒一次比较合适
+            setInterval(savePlayerState, 5000); 
+
+        })
+        .catch(error => {
+            console.error('获取或初始化播放器时发生错误:', error);
+            aplayerContainer.innerHTML = '<p style="text-align:center; color: #fff; padding: 20px;">音乐服务加载失败 ( T . T )</p>';
+        });
+}
 });

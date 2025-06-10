@@ -164,6 +164,12 @@ nav .nav-links a {
     font-weight: 600;
 }
 
+nav .user-actions {
+    display: flex; /* 改为flex布局 */
+    align-items: center;
+    gap: 1rem; /* 图标和按钮之间的间距 */
+}
+
 nav .user-actions a.btn {
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     padding: 8px 20px;
@@ -475,4 +481,31 @@ footer {
     /* 您可以根据喜好调整宽度 */
     z-index: 999;
     /* 其他样式由APlayer库控制 */
+}
+
+.user-actions .social-icon {
+    color: white;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.user-actions .social-icon:hover {
+    color: var(--secondary-color);
+}
+
+/* --- 一言模块新样式 --- */
+.hitokoto-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.9em;
+}
+.hitokoto-actions i {
+    margin-left: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+}
+.hitokoto-actions i:hover {
+    color: var(--secondary-color);
+    transform: rotate(180deg);
 }
