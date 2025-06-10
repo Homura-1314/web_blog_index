@@ -93,6 +93,44 @@ body {
     animation: none;
 }
 
+.copy-container {
+    display: inline-block;
+    position: relative;
+    width: 1em; /* 确保容器宽度足够容纳一个图标 */
+    height: 1em;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.copy-container:hover {
+    color: var(--secondary-color);
+    transform: scale(1.2);
+}
+
+.copy-container .icon-copy,
+.copy-container .icon-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* 默认状态：显示复制图标，隐藏对勾图标 */
+.copy-container .icon-check {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+/* 复制成功状态：通过JS添加 'copied' 类 */
+.copy-container.copied .icon-copy {
+    opacity: 0;
+    transform: scale(0.5);
+}
+.copy-container.copied .icon-check {
+    opacity: 1;
+    transform: scale(1);
+    color: #4CAF50; /* 成功的绿色 */
+}
+
 #slideshow-container .slide.active {
     /* 激活的slide，让它播放动画并提到最上层 */
     animation: fadeInZoom 1.5s 1 ease-in-out forwards;
@@ -500,12 +538,67 @@ footer {
     margin-top: 1rem;
     font-size: 0.9em;
 }
-.hitokoto-actions i {
-    margin-left: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s, color 0.3s;
+/* --- 一言模块新样式 --- */
+.hitokoto-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 确保来源和actions容器垂直对齐 */
+    margin-top: 1rem;
+    font-size: 0.9em;
 }
-.hitokoto-actions i:hover {
+
+.hitokoto-actions {
+    /* 【关键】: 应用Flexbox进行对齐 */
+    display: flex;
+    align-items: center; /* 垂直居中对齐所有子项 */
+    gap: 1.2rem; /* 控制两个图标之间的间距 */
+}
+
+/* 刷新图标的样式 */
+#refresh-hitokoto {
+    cursor: pointer;
+    transition: transform 0.5s, color 0.3s;
+}
+#refresh-hitokoto:hover {
     color: var(--secondary-color);
-    transform: rotate(180deg);
+    transform: rotate(360deg); /* 旋转一周更酷 */
+}
+
+
+/* --- 复制动效的样式 (这部分代码之前已有，请确保它存在) --- */
+.copy-container {
+    display: inline-flex; /* 改为inline-flex以更好地对齐内部图标 */
+    align-items: center; /* 垂直居中对齐内部的i标签 */
+    justify-content: center; /* 水平居中 */
+    position: relative;
+    width: 1.2em; /* 稍微给点空间 */
+    height: 1.2em;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.copy-container .icon-copy,
+.copy-container .icon-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 精准居中 */
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* 默认状态 */
+.copy-container .icon-check {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+}
+
+/* 复制成功状态 */
+.copy-container.copied .icon-copy {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+}
+.copy-container.copied .icon-check {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    color: #4CAF50;
 }

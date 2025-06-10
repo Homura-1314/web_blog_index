@@ -53,7 +53,11 @@
                     <div class="hitokoto-footer">
                         <span id="hitokoto-from"></span>
                         <div class="hitokoto-actions">
-                            <i class="fas fa-copy" id="copy-hitokoto" title="复制"></i>
+                            <!-- 【重要修改】将复制图标和对勾图标放在一个容器里 -->
+                            <div id="copy-hitokoto" class="copy-container" title="复制">
+                                <i class="fas fa-copy icon-copy"></i>
+                                <i class="fas fa-check icon-check"></i>
+                            </div>
                             <i class="fas fa-sync-alt" id="refresh-hitokoto" title="刷新"></i>
                         </div>
                     </div>

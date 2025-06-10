@@ -87,52 +87,69 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hitokotoContainer) {
     const textEl = document.getElementById('hitokoto-text');
     const fromEl = document.getElementById('hitokoto-from');
-    const copyBtn = document.getElementById('copy-hitokoto');
+    // 【重要修改】获取新的父容器
+    const copyContainer = document.getElementById('copy-hitokoto'); 
     const refreshBtn = document.getElementById('refresh-hitokoto');
-    
-    const fetchHitokoto = () => {
-        // 1. 在请求开始前，明确显示“正在加载”
-        textEl.style.opacity = 0.5; // 让旧的句子变淡，或直接显示加载文字
-        textEl.textContent = '正在加载一言...';
-        fromEl.textContent = ''; // 清空来源
+    let hitokotoInterval; // 用于存放定时器的变量
 
-        // 2. 使用更稳定的国际版API接口
+    const fetchHitokoto = () => {
+        textEl.style.opacity = 0.5;
+        textEl.textContent = '正在加载一言...';
+        fromEl.textContent = '';
         fetch('https://international.v1.hitokoto.cn')
-            .then(response => {
-                // 3. 检查网络响应是否成功
-                if (!response.ok) {
-                    throw new Error('网络响应错误，状态码: ' + response.status);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                // 4. 成功获取数据后，更新UI
                 textEl.style.opacity = 1;
                 textEl.textContent = `“${data.hitokoto}”`;
                 fromEl.textContent = `—— ${data.from_who || ''}《${data.from}》`;
             })
             .catch(error => {
-                // 5. 【关键】如果请求失败，明确告知用户
                 console.error('获取一言失败:', error);
                 textEl.style.opacity = 1;
                 textEl.textContent = '一言加载失败，请稍后再试 T_T';
             });
     };
-    
-    // 复制和刷新按钮的事件监听器保持不变
-    copyBtn.addEventListener('click', () => {
-        // 过滤掉加载失败的提示文字
-        if (textEl.textContent.includes('加载失败')) return;
-        navigator.clipboard.writeText(textEl.textContent)
-            .then(() => alert('已复制到剪贴板！'))
-            .catch(err => console.error('复制失败: ', err));
-    });
 
-    refreshBtn.addEventListener('click', fetchHitokoto);
+    // 【全新动效逻辑】
+    if (copyContainer) {
+        copyContainer.addEventListener('click', () => {
+            if (textEl.textContent.includes('加载失败') || copyContainer.classList.contains('copied')) {
+                return; // 如果正在显示失败提示或已经复制，则不执行
+            }
+            navigator.clipboard.writeText(textEl.textContent)
+                .then(() => {
+                    // 添加 'copied' 类来触发CSS动效
+                    copyContainer.classList.add('copied');
+                    // 1.5秒后自动恢复原状
+                    setTimeout(() => {
+                        copyContainer.classList.remove('copied');
+                    }, 1500);
+                })
+                .catch(err => {
+                    console.error('复制失败: ', err);
+                    alert('复制失败，请检查浏览器权限。'); // 保留一个备用提示
+                });
+        });
+    }
 
-    // 页面加载时自动获取第一条
-    fetchHitokoto();
-}
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+            fetchHitokoto();
+            // 手动刷新后，重置定时器，避免立即又刷新一次
+            clearInterval(hitokotoInterval);
+            startHitokotoInterval();
+        });
+    }
+
+    // 【全新定时器逻辑】
+    function startHitokotoInterval() {
+        hitokotoInterval = setInterval(fetchHitokoto, 25000); // 每10秒 (10000毫秒) 自动刷新
+    }
+
+    // 页面加载时执行
+    fetchHitokoto(); // 立即获取第一条
+    startHitokotoInterval(); // 启动定时器
+    }
 
     const slideshowContainer = document.getElementById("slideshow-container");
     if (slideshowContainer) {
@@ -215,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. 打字机效果
     const typewriterElement = document.getElementById('typewriter');
     if (typewriterElement) {
-        const text = "欢迎来到我的知识空间...";
+        const text = "欢迎来到我的知识空间~";
         let index = 0;
         function type() {
             if (index < text.length) {
