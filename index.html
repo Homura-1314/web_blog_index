@@ -24,7 +24,11 @@
         </div>
         <!-- 用户操作区 -->
         <div class="user-actions">
-            <!-- 新增的GitHub链接 -->
+            <!-- 主题切换按钮 -->
+            <div id="theme-toggle" class="social-icon" title="切换主题">
+                <i class="fas fa-sun"></i> <!-- 默认显示太阳图标 -->
+            </div>
+            <!-- GitHub链接 -->
             <a href="https://github.com/Homura-1314" target="_blank" class="social-icon" title="GitHub">
                 <i class="fab fa-github"></i>
             </a>
@@ -63,33 +67,53 @@
                     </div>
                 </div>
             </div>
-            <section id="portfolio" class="fade-in">
-                <center>
-                    <h2>知识星系</h2>
-                </center>
-                <div class="portfolio-grid">
-                    <!-- 文章1入口 -->
-                    <a href="article.html?topic=html-css" class="project-card tilt-effect">
-                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2670&auto=format&fit=crop"
-                            alt="HTML/CSS">
-                        <div class="project-info">
+            <section id="knowledge-base" class="fade-in">
+                <center><h2>知识星系</h2></center>
+                <!-- 文章列表容器 -->
+                <div class="article-list">
+
+                    <!-- 文章1卡片 -->
+                    <a href="article.html?topic=html-css" class="article-card tilt-effect">
+                        <div class="card-image-container">
+                            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2670&auto=format&fit=crop" alt="HTML/CSS">
+                        </div>
+                        <div class="card-content">
                             <h3>Web世界的基石：HTML & CSS入门</h3>
+                            <p class="card-excerpt">了解如何使用HTML构建网页结构，并用CSS为其赋予精美的样式，这是成为Web开发者的第一步。</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-calendar-alt"></i> 2024-07-01</span>
+                                <span class="tag">#基础</span>
+                            </div>
                         </div>
                     </a>
-                    <!-- 文章2入口 -->
-                    <a href="article.html?topic=javascript-dom" class="project-card tilt-effect">
-                        <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=2670&auto=format&fit=crop"
-                            alt="JavaScript">
-                        <div class="project-info">
+
+                    <!-- 文章2卡片 -->
+                    <a href="article.html?topic=javascript-dom" class="article-card tilt-effect">
+                        <div class="card-image-container">
+                            <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=2670&auto=format&fit=crop" alt="JavaScript">
+                        </div>
+                        <div class="card-content">
                             <h3>赋予页面生命：JavaScript与DOM交互</h3>
+                            <p class="card-excerpt">学习如何使用JavaScript操作页面元素 (DOM)，响应用户交互，让你的网页“活”起来。</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-calendar-alt"></i> 2024-07-05</span>
+                                <span class="tag">#核心</span>
+                            </div>
                         </div>
                     </a>
-                    <!-- 文章3入口 -->
-                    <a href="article.html?topic=frontend-frameworks" class="project-card tilt-effect">
-                        <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?q=80&w=2670&auto=format&fit=crop"
-                            alt="Frameworks">
-                        <div class="project-info">
+
+                    <!-- 文章3卡片 -->
+                    <a href="article.html?topic=frontend-frameworks" class="article-card tilt-effect">
+                        <div class="card-image-container">
+                            <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?q=80&w=2670&auto=format&fit=crop" alt="Frameworks">
+                        </div>
+                        <div class="card-content">
                             <h3>现代Web的魔法：初识前端框架</h3>
+                            <p class="card-excerpt">探索React、Vue等现代前端框架的魅力，了解它们如何帮助我们高效地构建复杂应用。</p>
+                            <div class="card-meta">
+                                <span><i class="fas fa-calendar-alt"></i> 2024-07-10</span>
+                                <span class="tag">#进阶</span>
+                            </div>
                         </div>
                     </a>
                 </div>

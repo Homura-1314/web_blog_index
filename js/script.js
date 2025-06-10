@@ -1,5 +1,41 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
 
+    // 1. 定义切换函数
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            body.classList.add('dark-theme');
+            if(themeIcon) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.classList.remove('dark-theme');
+            if(themeIcon) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // 2. 按钮点击事件
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            if (body.classList.contains('dark-theme')) {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        });
+    }
+
+    // 3. 初始化主题：检查localStorage中保存的用户偏好
+    const savedTheme = localStorage.getItem('theme') || 'light'; // 默认亮色主题
+    setTheme(savedTheme);
     //内容数据库 (博客文章) ---
     const articles = {
         "html-css": {
