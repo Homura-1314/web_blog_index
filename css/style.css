@@ -1,0 +1,478 @@
+/* 引入谷歌字体和Font Awesome图标 */
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+
+/* 全局变量 */
+:root {
+    --primary-color: #a29bfe;
+    --secondary-color: #fab1a0;
+    --text-color-light: #e0e0e0;
+    --text-color-dark: #333;
+    --card-bg-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 基础设置 */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    /* background-color: #1a1a2e; */
+    color: var(--text-color-light);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- 全局背景 (粒子) --- */
+#particles-js, #slideshow-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    /* 确保在最底层 */
+}
+#particles-js {
+    background: linear-gradient(-45deg, #3a1c71, #d76d77, #ffaf7b);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
+}
+@keyframes kenburns {
+    0% {
+        transform: scale(1.0);
+        /* 动画开始时，图片是原始大小 */
+        opacity: 0;
+        /* 开始时完全透明 */
+    }
+
+    5% {
+        opacity: 1;
+        /* 在动画的前5%时间里，快速淡入 */
+    }
+
+    95% {
+        opacity: 1;
+        /* 在动画的中间90%时间里，保持不透明 */
+    }
+
+    100% {
+        transform: scale(1.1);
+        /* 动画结束时，图片放大到1.1倍 */
+        opacity: 0;
+        /* 在动画的最后5%时间里，快速淡出 */
+    }
+}
+
+@keyframes fadeInZoom {
+    from {
+        opacity: 0;
+        transform: scale(1.0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+#slideshow-container .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+
+    /* 所有slide默认都是透明的，且在最底层 */
+    opacity: 0;
+    z-index: 0;
+
+    /* 动画只在它被激活时播放一次 */
+    animation: none;
+}
+
+#slideshow-container .slide.active {
+    /* 激活的slide，让它播放动画并提到最上层 */
+    animation: fadeInZoom 1.5s 1 ease-in-out forwards;
+    z-index: 2;
+    /* 比下面的previous层级高 */
+}
+
+#slideshow-container .slide.previous {
+    /* "前一张"图片，让它保持不透明，并被压在激活的图片下面 */
+    opacity: 1;
+    z-index: 1;
+    /* 比激活的层级低，但比默认的高 */
+    transform: scale(1.05);
+    /* 保持放大状态，避免跳动 */
+}
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* --- 顶部悬浮导航 --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 5%;
+    box-sizing: border-box;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a.logo {
+    font-family: 'ZCOOL KuaiLe', sans-serif;
+    font-size: 1.8rem;
+    color: white;
+    text-decoration: none;
+    text-shadow: 0 0 8px var(--primary-color);
+}
+
+nav .nav-links {
+    flex-grow: 1;
+    text-align: center;
+}
+
+nav .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1.5rem;
+    font-weight: 600;
+}
+
+nav .user-actions a.btn {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    padding: 8px 20px;
+    border-radius: 50px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- 登录/注册页样式 --- */
+.bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+}
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-color-dark);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.auth-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+}
+
+.auth-form h2 {
+    margin-bottom: 2rem;
+    font-family: 'ZCOOL KuaiLe', sans-serif;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.form-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* --- 内容页面通用样式 --- */
+main {
+    padding-top: 100px;
+    padding-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.card {
+    width: 100%;
+    background: var(--card-bg-color);
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tilt-effect {
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    object-fit: cover;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 20px rgba(162, 155, 254, 0.5);
+    image-rendering: -webkit-optimize-contrast;
+}
+
+h1,
+h2 {
+    font-family: 'ZCOOL KuaiLe', sans-serif;
+}
+
+#typewriter::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+    from,
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* --- 技能徽章样式 --- */
+.skills-badge-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.skill-badge {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--text-color-light);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.skill-badge:hover {
+    transform: translateY(-3px);
+}
+
+.skill-badge i {
+    color: var(--secondary-color);
+}
+
+/* --- 一言(Hitokoto)样式 --- */
+.hitokoto-container {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+#hitokoto-text {
+    transition: opacity 0.5s;
+}
+
+#hitokoto-from {
+    text-align: right;
+    margin-top: 0.5rem;
+    font-size: 0.9em;
+}
+
+/* --- 知识星系 (首页) --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+a.project-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text-color-light);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+a.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.project-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.project-info {
+    padding: 1rem 1.5rem;
+    text-align: left;
+}
+
+.project-info h3 {
+    margin: 0;
+}
+
+/* --- 文章页样式 --- */
+.article-content {
+    text-align: left;
+    line-height: 1.8;
+}
+
+.article-content h3 {
+    margin-top: 2.5rem;
+    border-left: 4px solid var(--secondary-color);
+    padding-left: 1rem;
+}
+
+.article-content p,
+.article-content li {
+    color: #c9c9c9;
+}
+
+.article-content strong {
+    color: var(--secondary-color);
+}
+
+.article-content ul {
+    list-style-type: '✨';
+    padding-left: 2rem;
+}
+
+.article-content a {
+    color: var(--primary-color);
+}
+
+pre[class*="language-"] {
+    border-radius: 8px;
+    padding: 1.5em;
+    font-size: 0.9em;
+}
+
+/* --- 页脚样式 --- */
+footer {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem 1rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.social-links {
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    color: var(--text-color-light);
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--secondary-color);
+}
+#aplayer {
+    position: fixed !important;
+    /* 使用 !important 强制覆盖库的默认定位 */
+    bottom: 0;
+    left: 0;
+    width: 350px;
+    /* 您可以根据喜好调整宽度 */
+    z-index: 999;
+    /* 其他样式由APlayer库控制 */
+}

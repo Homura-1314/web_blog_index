@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ↓↓↓ 这个标题可以每个页面自己改 ↓↓↓ -->
+    <title>创想次元</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 代码高亮CSS（只在article.html需要，但为了统一放这里也没问题） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    <div id="aplayer"></div>
+    <!-- 统一的顶部悬浮导航 -->
+    <header>
+    <nav>
+        <a href="index.html" class="logo">创想次元</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="about.html">关于</a>
+            <a href="contact.html">捕获</a>
+        </div>
+        <!-- 用户操作区 -->
+        <div class="user-actions">
+            <!-- 新增的GitHub链接 -->
+            <a href="https://github.com/Homura-1314" target="_blank" class="social-icon" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <!-- 登录/退出按钮 -->
+            <a href="login.html" class="btn" id="nav-auth-link">登录</a>
+        </div>
+    </nav>
+    </header>
+
+    <main>
+        <div class="card fade-in">
+            <h1>发送时空胶囊</h1>
+            <p>想要和我建立契约吗？请在此留下你的印记！</p>
+            <form id="contactForm" style="margin-top: 2rem; text-align: left;">
+                <input type="text" placeholder="你的代号" required
+                    style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 5px; border: 1px solid var(--primary-color); background: rgba(0,0,0,0.2); color: var(--text-color);">
+                <textarea placeholder="你想说的话..." rows="5" required
+                    style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 5px; border: 1px solid var(--primary-color); background: rgba(0,0,0,0.2); color: var(--text-color);"></textarea>
+                <button type="submit" class="btn" style="width: 100%;">发射</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a>
+            <a href="#" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© 2025 三叶hikari | 创想次元</p>
+    </footer>
+
+    <!-- 脚本（所有内容页统一） -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-css.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+</body>
+
+</html>

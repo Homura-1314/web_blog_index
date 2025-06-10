@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创想次元</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    <div id="aplayer"></div>
+    <!-- 统一的顶部悬浮导航 -->
+    <header>
+    <nav>
+        <a href="index.html" class="logo">创想次元</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="about.html">关于</a>
+            <a href="contact.html">捕获</a>
+        </div>
+        <!-- 用户操作区 -->
+        <div class="user-actions">
+            <!-- 新增的GitHub链接 -->
+            <a href="https://github.com/Homura-1314" target="_blank" class="social-icon" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <!-- 登录/退出按钮 -->
+            <a href="login.html" class="btn" id="nav-auth-link">登录</a>
+        </div>
+    </nav>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <!-- 卡片1: 个人介绍 -->
+            <div class="card tilt-effect">
+                <img src="images/avatar.png" alt="个人头像" class="avatar">
+                <h1 id="typewriter"></h1>
+                <p>欢迎来到我的知识空间，一个记录学习、分享探索的次元角落。</p>
+                <br>
+                <a href="about.html" class="btn">了解博主</a>
+                <div class="skills-badge-container">
+                    <span class="skill-badge"><i class="fab fa-html5"></i> HTML</span>
+                    <span class="skill-badge"><i class="fab fa-css3-alt"></i> CSS</span>
+                    <span class="skill-badge"><i class="fab fa-js-square"></i> JavaScript</span>
+                </div>
+                <div class="hitokoto-container" id="hitokoto-container">
+                    <p id="hitokoto-text">正在加载一言...</p>
+                    <p id="hitokoto-from"></p>
+                </div>
+            </div>
+            <section id="portfolio" class="fade-in">
+                <center>
+                    <h2>知识星系</h2>
+                </center>
+                <div class="portfolio-grid">
+                    <!-- 文章1入口 -->
+                    <a href="article.html?topic=html-css" class="project-card tilt-effect">
+                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2670&auto=format&fit=crop"
+                            alt="HTML/CSS">
+                        <div class="project-info">
+                            <h3>Web世界的基石：HTML & CSS入门</h3>
+                        </div>
+                    </a>
+                    <!-- 文章2入口 -->
+                    <a href="article.html?topic=javascript-dom" class="project-card tilt-effect">
+                        <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=2670&auto=format&fit=crop"
+                            alt="JavaScript">
+                        <div class="project-info">
+                            <h3>赋予页面生命：JavaScript与DOM交互</h3>
+                        </div>
+                    </a>
+                    <!-- 文章3入口 -->
+                    <a href="article.html?topic=frontend-frameworks" class="project-card tilt-effect">
+                        <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?q=80&w=2670&auto=format&fit=crop"
+                            alt="Frameworks">
+                        <div class="project-info">
+                            <h3>现代Web的魔法：初识前端框架</h3>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a>
+            <a href="#" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© 2025 三叶hikari | 创想次元</p>
+    </footer>
+
+    <!-- 脚本（所有内容页统一） -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-css.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+</body>
+
+</html>
