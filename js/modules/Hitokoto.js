@@ -6,7 +6,6 @@
     if (hitokotoContainer) {
     const textEl = document.getElementById('hitokoto-text');
     const fromEl = document.getElementById('hitokoto-from');
-    // 【重要修改】获取新的父容器
     const copyContainer = document.getElementById('copy-hitokoto'); 
     const refreshBtn = document.getElementById('refresh-hitokoto');
     let hitokotoInterval; // 用于存放定时器的变量
@@ -58,9 +57,9 @@
         });
     }
 
-    // 【全新定时器逻辑】
+    // 定时器逻辑
      function startHitokotoInterval() {
-        hitokotoInterval = setInterval(fetchHitokoto, 25000); // 每10秒 (10000毫秒) 自动刷新
+        hitokotoInterval = setInterval(fetchHitokoto, 25000); // 每25秒自动刷新
     }
 
     // 页面加载时执行
