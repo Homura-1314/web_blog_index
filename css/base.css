@@ -12,31 +12,27 @@
 
 /* 基础设置 */
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: background-color .4s, color .4s;
+    --text-color: #1a1a1a; /* 更深的黑色，对比更强 */
+    --text-color-secondary: #6b7280; /* 中度灰色 */
+    --card-bg-color: #ffffff; /* 卡片纯白不透明 */
+    --body-bg-color: #f9fafb; /* 背景用非常浅的灰色 */
+    --border-color: #e5e7eb; /* 边框更明显 */
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* 亮色主题变量 */
-body {
-    --text-color: #333;
-    --text-color-secondary: #777;
-    --card-bg-color: rgba(255, 255, 255, 0.7);
-    --body-bg-color: #f4f6f9;
-    --border-color: rgba(0, 0, 0, 0.1);
-}
-
-/* 暗色主题变量 */
+/* 暗色主题：加深背景，卡片颜色与背景做出区分 */
 body.dark-theme {
-    --text-color: #e0e0e0;
-    --text-color-secondary: #a0a0a0;
-    --card-bg-color: rgba(26, 26, 41, 0.7);
-    --body-bg-color: #12121c;
-    --border-color: rgba(255, 255, 255, 0.1);
+    --text-color: #e5e7eb; /* 柔和的白色 */
+    --text-color-secondary: #9ca3af; /* 更亮的灰色，保证可读性 */
+    --card-bg-color: #1e293b; /* 卡片使用深蓝灰色，区别于纯黑背景 */
+    --body-bg-color: #0f172a; /* 背景为更深的藏青色 */
+    --border-color: #334155; /* 边框颜色更亮 */
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* 将阴影变量应用到卡片上 */
+.card, a.article-card, #hero-article-card {
+    box-shadow: var(--card-shadow);
 }
 
 /* 根据主题应用颜色 */
