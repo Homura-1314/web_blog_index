@@ -22,8 +22,10 @@ main {
     box-sizing: border-box; flex-grow: 1;
 }
 .content-wrapper {
-    width: 100%; max-width: 900px;
-    padding: 0 1rem; box-sizing: border-box;
+    width: 100%;  max-width: 1400px; 
+    /* 增加左右内边距，让内容不会紧贴屏幕边缘 */
+    padding: 0 2rem; /* 原来是 1rem */
+    box-sizing: border-box;
 }
 
 /* --- 文章列表与详情页布局 --- */

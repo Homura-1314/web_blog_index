@@ -169,3 +169,32 @@ export function music_player(){
     init_music();
 }
 }
+export function initArticleFilter() {
+    const filterBar = document.getElementById('filter-bar');
+    if (!filterBar) return;
+
+    // 事件委托：将事件监听器添加到父元素上，效率更高
+    filterBar.addEventListener('click', (e) => {
+        // 确保点击的是按钮
+        if (e.target.tagName !== 'BUTTON') return;
+
+        const button = e.target;
+        
+        // 切换按钮的 active 状态
+        filterBar.querySelector('.active').classList.remove('active');
+        button.classList.add('active');
+
+        const filterValue = button.getAttribute('data-filter');
+        const articleCards = document.querySelectorAll('#full-article-grid .article-card');
+
+        // 筛选文章卡片
+        articleCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (filterValue === '全部' || filterValue === cardCategory) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+}

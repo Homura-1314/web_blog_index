@@ -1,61 +1,159 @@
 const articles = {
     "html-css": {
+        // --- 以下是卡片显示所必需的属性 ---
         title: "Web世界的基石：HTML & CSS入门",
-        content: `<p>在广袤的数字宇宙中，每一个网站都是一个独立的世界...</p><pre><code class="language-html"><!DOCTYPE html>...</code></pre><h3>CSS：样式的魔法</h3><p>如果HTML是骨架...</p><pre><code class="language-css">h1 {\n  color: #0096fa;\n}</code></pre><p>掌握了HTML和CSS，你就获得了创造静态网页世界的基本能力...</p>`,
         excerpt: "了解如何使用HTML构建网页结构，并用CSS为其赋予精美的样式，这是成为Web开发者的第一步。",
-        image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2670&auto=format&fit=crop",
-        tags: "HTML/CSS",
-        category: "#基础",
+        image: "images/bg6.jpg", // 请务必提供一个有效的图片URL
+        tags: "#HTML #CSS #Frontend",
+        category: "基础",
         author: "三叶hikari",
-        date: "2024-07-01"
+        date: "2024-07-01",
+        
+        // --- 这个是文章详情页必需的属性 ---
+        content: `<p>在广袤的数字宇宙中，每一个网站都是一个独立的世界...</p><p>这是文章的详细内容，可以很长，包含各种HTML标签。</p>`
     },
+    
     "javascript-dom": {
+        // --- 请确保这个对象也拥有和上面一样的所有属性 ---
         title: "赋予页面生命：JavaScript与DOM交互",
-        content: `<p>静态的网页虽然美丽，但却缺少互动...</p><h3>什么是DOM？</h3><p>DOM (文档对象模型) 是浏览器为HTML文档创建的一个树形结构模型...</p><pre><code class="language-html"><button id="magicButton">点我施放魔法</button>...</code></pre><pre><code class="language-javascript">const button = document.getElementById('magicButton');...</code></pre><p>当用户点击按钮时，这段JS代码就会找到ID为 "message" 的段落...</p>`,
         excerpt: "学习如何使用JavaScript操作页面元素 (DOM)，响应用户交互，让你的网页“活”起来。",
-        image: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=2670&auto=format&fit=crop",
-        tags: "JAVASCRIPT",
-        category: "#核心",
+        image: "images/bg6.jpg",
+        tags: "#JavaScript #DOM #Core",
+        category: "核心",
         author: "三叶hikari",
-        date: "2024-07-05"
+        date: "2024-07-05",
+        content: `<p>静态的网页虽然美丽，但却缺少互动...</p>`
     },
+
     "docker-intro": {
+        // --- 这个也一样，所有属性都要补全 ---
         title: "docker入门",
-        excerpt: "1.docker概述, 1.1 基本介绍 Docker 是一个开源的应用容器引擎...",
-        image: "images/bg4.jpg",
-        tags: "DOCKER",
-        category: "# Docker",
+        excerpt: "1.docker概述, 1.1 基本介绍 Docker 是一个开源的应用容器引擎，可以轻松地为任何应用创建一个轻量级的、可移植的、自给自足的容器。",
+        image: "images/bg4.jpg", // 确保这是一个有效的本地图片路径
+        tags: "#Docker #DevOps",
+        category: "服务部署",
         author: "花火",
         date: "Jul 28, 2022",
-        content: `<h3>Docker是什么？</h3><p>Docker 是一个开源的应用容器引擎...</p><pre><code class="language-bash">docker pull nginx</code></pre><p>容器是完全使用沙箱机制...</p>`
-    },
+        content: `<h3>Docker是什么？</h3><p>Docker 是一个开源的应用容器引擎...</p>`
+    }
+    // ... 其他所有文章条目都应如此
 };
-export function post_data() {
-    const newArticleListContainer = document.getElementById('new-article-list');
-    if (!newArticleListContainer) return;
+function createHeroArticleHTML(key, article) {
+     return `
+        <div class="hero-content-part">
+            <div class="tags">${article.tags}</div>
+            <h2>${article.title}</h2>
+            <p>${article.excerpt}</p>
+            <div class="card-meta">
+                <img src="images/avatar.png" alt="author">
+                <span>${article.author} · ${article.date}</span>
+            </div>
+        </div>
+        <a href="article.html?topic=${key}" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;" aria-label="${article.title}"></a>
+    `;
+}
+function createArticleCardHTML(key, article) {
+    if (!article) return '';
 
-    let allArticlesHTML = '';
-    for (const key in articles) {
-        if (Object.hasOwnProperty.call(articles, key)) {
-            const article = articles[key];
-            allArticlesHTML += `
-                <a href="article.html?topic=${key}" class="article-card">
-                    <div class="card-image-container">
-                        <img src="${article.image}" alt="${article.title}">
-                    </div>
-                    <div class="card-content">
-                        <h3>${article.title}</h3>
-                        <p class="card-excerpt">${article.excerpt}</p>
-                        <div class="card-meta">
-                            <span><i class="fas fa-calendar-alt"></i> ${article.date}</span>
-                            <span class="tag">${article.category}</span>
-                        </div>
-                    </div>
-                </a>
-            `;
+    // 如果某个属性不存在，就使用一个默认值，而不是显示'undefined'
+    const imageUrl = article.image || 'images/placeholder.png'; // 比如用一张默认图
+    const title = article.title || '无标题文章';
+    const excerpt = article.excerpt || '暂无描述...';
+    const author = article.author || '匿名作者';
+    const date = article.date || '';
+    const category = (article.category || '未分类').replace('#', '').trim();
+    const tags = article.tags || '';
+
+    // ... 返回 HTML 结构 ...
+    // (这里的 HTML 结构和你正在使用的保持一致即可)
+    return `
+        <a href="article.html?topic=${key}" class="article-card" data-category="${category}">
+            <div class="card-image-container">
+                <img src="${imageUrl}" alt="${title}">
+            </div>
+            <div class="card-content">
+                <div class="card-tags-container">
+                    <span class="primary-tag" data-category="${category}">${category}</span>
+                    <span class="secondary-tags">${tags}</span>
+                </div>
+                <h3>${title}</h3>
+                <p class="card-excerpt">${excerpt}</p>
+                <div class="card-meta">
+                    <img src="images/avatar.png" alt="${author}">
+                    <span>${author} · ${date}</span>
+                </div>
+            </div>
+        </a>
+    `;
+}
+export function post_data() {
+    const articleKeys = Object.keys(articles);
+    if (articleKeys.length === 0) return;
+
+    // --- 获取所有需要填充的容器 ---
+    const heroContainer = document.getElementById('hero-article-card');
+    const recommendedGrid = document.getElementById('recommended-article-grid');
+    const fullGrid = document.getElementById('full-article-grid');
+    const filterBar = document.getElementById('filter-bar');
+
+    // --- 修正1：完整地填充所有区域 ---
+    if (heroContainer) {
+        const heroArticleKey = articleKeys[0];
+        const heroArticle = articles[heroArticleKey];
+        if (heroArticle) {
+            heroContainer.style.backgroundImage = `url('${heroArticle.image}')`;
+            heroContainer.innerHTML = createHeroArticleHTML(heroArticleKey, heroArticle);
         }
     }
-    newArticleListContainer.innerHTML = allArticlesHTML;
+
+    if (recommendedGrid) {
+        let recommendedHTML = '';
+        const recommendedKeys = articleKeys.slice(1, 3);
+        recommendedKeys.forEach(key => {
+            const article = articles[key];
+            if (article) { // <-- 关键检查
+                recommendedHTML += createArticleCardHTML(key, article);
+            }
+        });
+        recommendedGrid.innerHTML = recommendedHTML;
+    }
+
+    if (fullGrid) {
+        let fullHTML = '';
+        articleKeys.forEach(key => {
+            const article = articles[key];
+            if (article) { // <-- 关键检查
+                fullHTML += createArticleCardHTML(key, article);
+            }
+        });
+        fullGrid.innerHTML = fullHTML;
+    }
+    
+    // --- 修正2：生成带计数的筛选按钮 (这段逻辑保持不变，但要确保它在函数内) ---
+    if(filterBar) {
+        const categories = new Set();
+        const categoryCounts = {};
+
+        articleKeys.forEach(key => {
+            const cat = articles[key].category.replace('#', '').trim();
+            if (cat) {
+                categories.add(cat);
+                categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+            }
+        });
+
+        let filterButtonsHTML = `<button class="filter-btn active" data-filter="全部">全部</button>`;
+        categories.forEach(cat => {
+            const count = categoryCounts[cat] || 0;
+            filterButtonsHTML += `
+                <button class="filter-btn" data-filter="${cat}">
+                    ${cat}
+                    <span class="tag-count">${count}</span>
+                </button>
+            `;
+        });
+        filterBar.innerHTML = filterButtonsHTML;
+    }
 }
 
 export function content_logic(){

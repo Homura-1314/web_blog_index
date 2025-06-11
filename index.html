@@ -31,7 +31,6 @@
         <div class="nav-links">
             <a href="index.html">首页</a>
             <a href="about.html">关于</a>
-            <a href="contact.html">捕获</a>
         </div>
         <!-- 用户操作区 -->
         <div class="user-actions">
@@ -50,40 +49,52 @@
     </header>
 
     <main>
-        <div class="content-wrapper">
-            <div class="card tilt-effect">
-                <img src="images/avatar.png" alt="个人头像" class="avatar">
-                <h1 id="typewriter"></h1>
-                <p>欢迎来到我的知识空间，一个记录学习、分享探索的次元角落。</p>
-                <br>
-                <a href="about.html" class="btn">了解博主</a>
-                <div class="skills-badge-container">
-                    <span class="skill-badge"><i class="fab fa-html5"></i> HTML</span>
-                    <span class="skill-badge"><i class="fab fa-css3-alt"></i> CSS</span>
-                    <span class="skill-badge"><i class="fab fa-js-square"></i> JavaScript</span>
-                </div>
-                <div class="hitokoto-container">
-                    <p id="hitokoto-text">正在加载一言...</p>
-                    <div class="hitokoto-footer">
-                        <span id="hitokoto-from"></span>
-                        <div class="hitokoto-actions">
-                            <div id="copy-hitokoto" class="copy-container" title="复制">
-                                <i class="fas fa-copy icon-copy"></i>
-                                <i class="fas fa-check icon-check"></i>
-                            </div>
-                            <i class="fas fa-sync-alt" id="refresh-hitokoto" title="刷新"></i>
-                        </div>
-                    </div>
+    <div class="content-wrapper">
+
+        <!-- 1. 置顶英雄文章区域 -->
+        <section id="hero-section" class="fade-in">
+            <!-- 这个卡片将由JS动态填充，我们先留一个空的骨架 -->
+            <div id="hero-article-card">
+                <!-- JS动态内容会插入这里 -->
+            </div>
+        </section>
+
+        <!-- 2. 编辑推荐和文章列表区域 -->
+        <section id="recommended-section" class="fade-in">
+            <!-- 左侧的“推荐文章”卡片 -->
+            <div class="editor-selection-card tilt-effect">
+                <div class="editor-selection-content">
+                    <span>EDITOR'S SELECTION</span>
+                    <h3><i class="fas fa-fire"></i> 推荐文章</h3>
                 </div>
             </div>
-            <section id="knowledge-base" class="fade-in">
-                <center><h2>知识星系</h2></center>
-                <!-- 文章列表容器 -->
-                <div id="new-article-list"></div>
-            </section>
             
-        </div>
-    </main>
+            <!-- 右侧的文章格栅 -->
+            <div id="recommended-article-grid" class="article-grid">
+                <!-- JS 会在这里填充2-3篇推荐文章 -->
+            </div>
+        </section>
+
+        <!-- 3. 可筛选的文章列表 -->
+        <section id="filterable-gallery" class="fade-in">
+            <center><h2><i class="fas fa-layer-group"></i> 文章列表</h2></center>
+            
+            <!-- 新增一个 .gallery-layout 容器 -->
+            <div class="gallery-layout">
+                <!-- 筛选按钮栏 (放在左边) -->
+                <div id="filter-bar" class="filter-bar-vertical">
+                    <!-- JS 会在这里生成筛选按钮 -->
+                </div>
+
+                <!-- 所有文章的格栅 (放在右边) -->
+                <div id="full-article-grid" class="article-grid">
+                    <!-- JS 会在这里填充所有文章 -->
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
     <footer>
     <p>© 2025 三叶hikari | 创想次元</p>
     </footer>
