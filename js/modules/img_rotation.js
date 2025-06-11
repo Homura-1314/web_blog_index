@@ -1,3 +1,17 @@
+  function preloadImages(urls, callback) {
+    let loadedCount = 0;
+    const totalCount = urls.length;
+    urls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+            loadedCount++;
+            if (loadedCount === totalCount) {
+                callback();
+            }
+        };
+    });
+}
   export function init_img_rotion() {
     const slideshowContainer = document.getElementById("slideshow-container");
   if (slideshowContainer) {
@@ -8,8 +22,8 @@
     for (let i = 2; i <= totalImages; i++) {
       images.push(`images/bg${i}.jpg`);
     }
-
-    if (images.length > 0) {
+    preloadImages(images, () =>{
+      if (images.length > 0) {
       const slides = [];
       images.forEach((src) => {
         const slide = document.createElement("div");
@@ -55,5 +69,6 @@
         }, displayDuration);
       }
     }
+    })
   }
-  }
+}

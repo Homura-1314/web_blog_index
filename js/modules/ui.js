@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './Hitokoto.js'
 export function theme_init(){
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
@@ -39,17 +40,31 @@ export function theme_init(){
 }
 
 export function Effect(){
-    // 3. 3D倾斜效果
     const cards = document.querySelectorAll('.tilt-effect');
+
     cards.forEach(card => {
+        let ticking = false; // 请求动画帧的节流阀
+        let currentX = 0;
+        let currentY = 0;
+
+        const updateTransform = () => {
+            const rotateX = (currentY / card.offsetHeight) * -10;
+            const rotateY = (currentX / card.offsetWidth) * 10;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            ticking = false;
+        };
+
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            const rotateX = (y / rect.height) * -10;
-            const rotateY = (x / rect.width) * 10;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            currentX = e.clientX - rect.left - rect.width / 2;
+            currentY = e.clientY - rect.top - rect.height / 2;
+
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(updateTransform);
+            }
         });
+
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
         });
@@ -76,15 +91,19 @@ export function music_player(){
     if (aplayerContainer && typeof APlayer !== 'undefined') {
 
     aplayerContainer.innerHTML = '<p style="text-align:center; color: #fff; padding: 20px;">正在从次元云加载音乐...</p>';
-    const metingApiUrl = 'https://api.i-meto.com/meting/api?server=netease&type=playlist&id=7747893098'; 
-    fetch(metingApiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (!data || data.length === 0) {
-                throw new Error("API返回的播放列表为空");
-            }
-
-            aplayerContainer.innerHTML = '';
+    const metingApiUrl = 'https://api.i-meto.com/meting/api?server=netease&type=playlist&id=7747893098';
+    const init_music = async () =>{
+        try{
+            const response = await fetchWithTimeout(metingApiUrl, { timeout:5000
+        });
+        if (!response.ok){
+            throw new Error(`HTTP error status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (!data || data.length === 0){
+            throw new Error("API返回的播放列表为空");
+        }
+        aplayerContainer.innerHTML = '';
 
             const ap = new APlayer({
                 container: aplayerContainer,
@@ -137,11 +156,16 @@ export function music_player(){
             window.addEventListener('beforeunload', savePlayerState);
             // 定时器可以更频繁地保存进度
             setInterval(savePlayerState, 2500);
-
-        })
-        .catch(error => {
-            console.error('获取或初始化播放器时发生错误:', error);
-            aplayerContainer.innerHTML = '<p style="text-align:center; color: #fff; padding: 20px;">音乐服务加载失败 ( T . T )</p>';
-        });
+        }catch (error){
+            console.error('获得歌曲失败',error);
+            textEl.style.autoplay = 1;
+            if (error.name == 'AbortError'){
+                textEl.textContent = '获得歌曲超时了, 稍后再尝试喵>_<'
+            }else{
+                textEl.textContent = '歌曲加载失败, 稍后再尝试喵T_T'
+            }
+        }
+    }
+    init_music();
 }
 }

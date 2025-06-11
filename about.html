@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>创想次元-关于</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
 </head>
-<body>
+<body id="page-about">
     <div id="aplayer"></div>
     <header>
     <nav>
@@ -20,10 +22,11 @@
             <a href="contact.html">捕获</a>
         </div>
         <div class="user-actions">
-            <div id="theme-toggle" class="social-icon" title="切换主题">
+            <div id="theme-toggle" class="social-icon" title="切换主题" role="button" aria-label="切换亮色或暗色主题">
                 <i class="fas fa-sun"></i>
             </div>
-            <a href="https://github.com/Homura-1314" target="_blank" class="social-icon" title="GitHub">
+            <!-- GitHub链接 -->
+            <a href="https://github.com/Homura-1314/web_blog_index" target="_blank" class="social-icon" title="GitHub" aria-label="访问我的GitHub主页">
                 <i class="fab fa-github"></i>
             </a>
             <a href="login.html" class="btn" id="nav-auth-link">登录</a>
