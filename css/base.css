@@ -1,0 +1,64 @@
+/* css/base.css */
+
+/* 引入谷歌字体和Font Awesome图标 */
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Poppins:wght@400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+
+/* 全局变量 */
+:root {
+    --primary-color: #6a82fb;
+    --secondary-color: #fc5c7d;
+    --gradient-start: #3A61E2;
+    --gradient-end: #D439E8;
+
+    /* 亮色主题 */
+    --text-color-light: #333;
+    --text-secondary-light: #777;
+    --card-bg-light: rgba(255, 255, 255, 0.7);
+    --body-bg-light: #f4f6f9;
+    --border-color-light: rgba(0, 0, 0, 0.1);
+
+    /* 暗色主题 */
+    --text-color-dark: #e0e0e0;
+    --text-secondary-dark: #a0a0a0;
+    --card-bg-dark: rgba(26, 26, 41, 0.7);
+    --body-bg-dark: #12121c;
+    --border-color-dark: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--body-bg-light);
+    color: var(--text-color-light);
+    transition: background-color 0.4s, color 0.4s;
+}
+
+body.dark-theme {
+    background-color: var(--body-bg-dark);
+    color: var(--text-color-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'ZCOOL KuaiLe', 'Poppins', sans-serif;
+}
+
+/* 全局动画定义 */
+@keyframes fadeInZoom {
+    from { opacity: 0; transform: scale(1.0); }
+    to { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes wave-anim {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-2000px); }
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}

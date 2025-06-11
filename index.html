@@ -10,8 +10,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
 </head>
 <body>
-    <!-- 粒子背景 -->
-    <div id="particles-js"></div>
+    <div class="wave-background">
+        <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" class="wave">
+            <defs>
+                <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color: #3A61E2; stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: #D439E8; stop-opacity: 1" />
+                </linearGradient>
+            </defs>
+            <path fill="url(#waveGradient)" fill-opacity="0.8" d="M0,160L48,176C96,192,192,224,288,224C384,224,480,192,576,181.3C672,171,768,181,864,202.7C960,224,1056,256,1152,245.3C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+        </svg>
+    </div>
+<div class="wave-background-bottom"></div>
     <div id="aplayer"></div>
     <!-- 统一的顶部悬浮导航 -->
     <header>
@@ -70,53 +80,7 @@
             <section id="knowledge-base" class="fade-in">
                 <center><h2>知识星系</h2></center>
                 <!-- 文章列表容器 -->
-                <div class="article-list">
-
-                    <!-- 文章1卡片 -->
-                    <a href="article.html?topic=html-css" class="article-card tilt-effect">
-                        <div class="card-image-container">
-                            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2670&auto=format&fit=crop" alt="HTML/CSS">
-                        </div>
-                        <div class="card-content">
-                            <h3>Web世界的基石：HTML & CSS入门</h3>
-                            <p class="card-excerpt">了解如何使用HTML构建网页结构，并用CSS为其赋予精美的样式，这是成为Web开发者的第一步。</p>
-                            <div class="card-meta">
-                                <span><i class="fas fa-calendar-alt"></i> 2024-07-01</span>
-                                <span class="tag">#基础</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- 文章2卡片 -->
-                    <a href="article.html?topic=javascript-dom" class="article-card tilt-effect">
-                        <div class="card-image-container">
-                            <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=2670&auto=format&fit=crop" alt="JavaScript">
-                        </div>
-                        <div class="card-content">
-                            <h3>赋予页面生命：JavaScript与DOM交互</h3>
-                            <p class="card-excerpt">学习如何使用JavaScript操作页面元素 (DOM)，响应用户交互，让你的网页“活”起来。</p>
-                            <div class="card-meta">
-                                <span><i class="fas fa-calendar-alt"></i> 2024-07-05</span>
-                                <span class="tag">#核心</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- 文章3卡片 -->
-                    <a href="article.html?topic=frontend-frameworks" class="article-card tilt-effect">
-                        <div class="card-image-container">
-                            <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?q=80&w=2670&auto=format&fit=crop" alt="Frameworks">
-                        </div>
-                        <div class="card-content">
-                            <h3>现代Web的魔法：初识前端框架</h3>
-                            <p class="card-excerpt">探索React、Vue等现代前端框架的魅力，了解它们如何帮助我们高效地构建复杂应用。</p>
-                            <div class="card-meta">
-                                <span><i class="fas fa-calendar-alt"></i> 2024-07-10</span>
-                                <span class="tag">#进阶</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <div id="new-article-list"></div>
             </section>
         </div>
     </main>
@@ -130,7 +94,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-css.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 
 </html>

@@ -39,7 +39,7 @@ body {
 }
 
 /* --- 全局背景 (粒子) --- */
-#particles-js, #slideshow-container {
+ #slideshow-container {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -48,11 +48,7 @@ body {
     z-index: -2;
     /* 确保在最底层 */
 }
-#particles-js {
-    background: linear-gradient(-45deg, #3a1c71, #d76d77, #ffaf7b);
-    background-size: 400% 400%;
-    animation: gradientBG 20s ease infinite;
-}
+
 @keyframes kenburns {
     0% {
         transform: scale(1.0);
@@ -698,4 +694,99 @@ a.article-card:hover .card-image-container img {
 /* 移除旧的网格布局样式，以免冲突 (可选，但推荐) */
 .portfolio-grid {
     display: none; /* 直接隐藏掉旧的网格容器 */
+}
+
+body {
+    background-color: #1e1e1e; /* 深邃的纯黑背景 */
+}
+
+.wave-background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 50vh; /* 背景高度占屏幕一半 */
+    z-index: -1;
+    overflow: hidden;
+}
+.wave-background svg {
+    position: absolute;
+    bottom: 0;
+    width: 200%; /* SVG宽度为200%，用于制造流动效果 */
+    height: auto;
+    animation: wave-flow 25s linear infinite;
+}
+.wave-background-bottom {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%; height: 10px; /* 底部装饰线 */
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    z-index: -1;
+}
+
+@keyframes wave-flow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* SVG从右向左移动自身宽度的一半 */
+}
+.article-card-new {
+    position: relative;
+    display: block;
+    height: 380px; /* 根据截图调整了高度 */
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 2.5rem; /* 卡片间距 */
+    text-decoration: none;
+    color: var(--text-light);
+    background-color: #2a2a2e; /* 图片加载失败时的底色 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.article-card-new .card-bg-image {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.article-card-new:hover .card-bg-image {
+    transform: scale(1.05); /* 悬停时平滑放大 */
+}
+
+.article-card-new .card-content-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 2rem 2.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.98) 30%, transparent);
+}
+
+.article-card-new .card-tags {
+    font-size: 0.9rem;
+    color: var(--gradient-start); /* 使用渐变色的起始色 */
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.article-card-new .card-title {
+    font-size: 2.2rem;
+    margin: 0.5rem 0;
+    font-weight: 700;
+    color: #fff;
+}
+
+.article-card-new .card-excerpt {
+    color: #b0b0b0; /* 摘要文字颜色稍暗 */
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.article-card-new .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.article-card-new .card-meta img {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
 }

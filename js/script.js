@@ -1,4 +1,46 @@
+import { inithitok_to } from './modules/Hitokoto.js';
+import { init_img_rotion } from './modules/img_rotation.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+    const newArticleListContainer = document.getElementById('new-article-list');
+    if (newArticleListContainer) {
+    // 假设您的文章数据存储在名为 'articles' 的对象中
+    // 如果没有，可以先定义一个
+    const articles = {
+         "docker-intro": {
+            title: "docker入门",
+            excerpt: "1.docker概述, 1.1 基本介绍 Docker 是一个开源的应用容器引擎，基于 Go 语言并遵从 Apache2.0 协议开源。Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口，更重要的是...",
+            image: "images/bg4.jpg", // 请替换为你的图片
+            tags: "DOCKER",
+            category: "# Docker",
+            author: "花火",
+            date: "Jul 28, 2022"
+        },
+        // ...更多文章
+    };
+
+    let allArticlesHTML = '';
+    for (const key in articles) {
+        if (Object.hasOwnProperty.call(articles, key)) {
+            const article = articles[key];
+            allArticlesHTML += `
+                <a href="article.html?topic=${key}" class="article-card-new">
+                    <img src="${article.image}" alt="${article.title}" class="card-bg-image">
+                    <div class="card-content-overlay">
+                        <div class="card-tags">${article.tags} <span style="color: #888;">${article.category}</span></div>
+                        <h2 class="card-title">${article.title}</h2>
+                        <p class="card-excerpt">${article.excerpt}</p>
+                        <div class="card-meta">
+                            <img src="images/avatar.png" alt="author">
+                            <span>${article.author} shared on ${article.date}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+    }
+    newArticleListContainer.innerHTML = allArticlesHTML;
+}
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
     const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
@@ -108,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'index.html';
         });
     }
-
+    // (ui)验证账号
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
@@ -117,138 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'login.html';
         });
     }
-
-    // 1. 一言(Hitokoto) API
-    const hitokotoContainer = document.querySelector('.hitokoto-container');
-    if (hitokotoContainer) {
-    const textEl = document.getElementById('hitokoto-text');
-    const fromEl = document.getElementById('hitokoto-from');
-    // 【重要修改】获取新的父容器
-    const copyContainer = document.getElementById('copy-hitokoto'); 
-    const refreshBtn = document.getElementById('refresh-hitokoto');
-    let hitokotoInterval; // 用于存放定时器的变量
-
-    const fetchHitokoto = () => {
-        textEl.style.opacity = 0.5;
-        textEl.textContent = '正在加载一言...';
-        fromEl.textContent = '';
-        fetch('https://international.v1.hitokoto.cn')
-            .then(response => response.json())
-            .then(data => {
-                textEl.style.opacity = 1;
-                textEl.textContent = `“${data.hitokoto}”`;
-                fromEl.textContent = `—— ${data.from_who || ''}《${data.from}》`;
-            })
-            .catch(error => {
-                console.error('获取一言失败:', error);
-                textEl.style.opacity = 1;
-                textEl.textContent = '一言加载失败，请稍后再试 T_T';
-            });
-    };
-
-    // 【全新动效逻辑】
-    if (copyContainer) {
-        copyContainer.addEventListener('click', () => {
-            if (textEl.textContent.includes('加载失败') || copyContainer.classList.contains('copied')) {
-                return; // 如果正在显示失败提示或已经复制，则不执行
-            }
-            navigator.clipboard.writeText(textEl.textContent)
-                .then(() => {
-                    // 添加 'copied' 类来触发CSS动效
-                    copyContainer.classList.add('copied');
-                    // 1.5秒后自动恢复原状
-                    setTimeout(() => {
-                        copyContainer.classList.remove('copied');
-                    }, 1500);
-                })
-                .catch(err => {
-                    console.error('复制失败: ', err);
-                    alert('复制失败，请检查浏览器权限。'); // 保留一个备用提示
-                });
-        });
-    }
-
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            fetchHitokoto();
-            // 手动刷新后，重置定时器，避免立即又刷新一次
-            clearInterval(hitokotoInterval);
-            startHitokotoInterval();
-        });
-    }
-
-    // 【全新定时器逻辑】
-    function startHitokotoInterval() {
-        hitokotoInterval = setInterval(fetchHitokoto, 25000); // 每10秒 (10000毫秒) 自动刷新
-    }
-
-    // 页面加载时执行
-    fetchHitokoto(); // 立即获取第一条
-    startHitokotoInterval(); // 启动定时器
-    }
-
-    const slideshowContainer = document.getElementById("slideshow-container");
-    if (slideshowContainer) {
-      const totalImages = 12; // 您的图片总数
-      const displayDuration = 15000; // 每张图片显示时长
-
-      const images = [];
-      for (let i = 2; i <= totalImages; i++) {
-        images.push(`images/bg${i}.jpg`);
-      }
-
-      if (images.length > 0) {
-        const slides = [];
-        images.forEach((src) => {
-          const slide = document.createElement("div");
-          slide.className = "slide";
-          slide.style.backgroundImage = `url(${src})`;
-          slideshowContainer.appendChild(slide);
-          slides.push(slide);
-        });
-
-        let currentImageIndex = 0;
-
-        // 立即显示第一张图
-        slides[currentImageIndex].classList.add("active");
-
-        if (slides.length > 1) {
-          setInterval(() => {
-            const lastImageIndex = currentImageIndex;
-            let nextImageIndex;
-            do {
-              nextImageIndex = Math.floor(Math.random() * slides.length);
-            } while (nextImageIndex === currentImageIndex);
-
-            const lastSlide = slides[lastImageIndex];
-            const nextSlide = slides[nextImageIndex];
-
-            // 1. 将上一张图标记为 'previous'，让它留在原地作为背景
-            lastSlide.classList.remove("active");
-            lastSlide.classList.add("previous");
-
-            // 2. 激活下一张图的动画，它会覆盖在上一张图之上
-            nextSlide.classList.remove("previous"); // 先清理状态
-            nextSlide.classList.add("active");
-
-            // 3. 在下一张图的动画开始后，再把更早的图片的previous类移除，让它回到待命状态
-            // 找到除了当前和上一张之外的所有图片
-            slides.forEach((slide, index) => {
-              if (index !== lastImageIndex && index !== nextImageIndex) {
-                slide.classList.remove("previous");
-              }
-            });
-
-            currentImageIndex = nextImageIndex;
-          }, displayDuration);
-        }
-      }
-    }
-    // 2. 粒子背景
-    if (typeof particlesJS !== 'undefined') {
-        particlesJS('particles-js', {"particles":{"number":{"value":60,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle"},"opacity":{"value":0.5,"random":false},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":4,"direction":"none","random":false,"straight":false,"out_mode":"out"}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"}},"modes":{"repulse":{"distance":150,"duration":0.4},"push":{"particles_nb":4}}},"retina_detect":true});
-    }
-
+    // 一言(Hitokoto)模块
+     console.log("🚀 DOMContentLoaded event fired. Initializing functions...");
+    inithitok_to();
+    // 图片轮换模块
+    init_img_rotion();
     // 3. 3D倾斜效果
     const cards = document.querySelectorAll('.tilt-effect');
     cards.forEach(card => {

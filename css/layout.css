@@ -1,0 +1,72 @@
+/* --- 顶部悬浮导航 --- */
+header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 1rem 5%;
+    box-sizing: border-box;
+    z-index: 1000;
+    background: rgba(26, 26, 41, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- 登录/注册页布局 --- */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* --- 内容页面布局 --- */
+main {
+    padding-top: 100px;
+    padding-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+.content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    gap: 2rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+.content-left {
+    flex: 1; /* 占据更多空间 */
+}
+.sidebar-right {
+    width: 300px;
+    flex-shrink: 0;
+}
+.sidebar-right .sidebar-card {
+    position: sticky;
+    top: 100px;
+}
+
+/* 单独的文章页布局 (无侧边栏) */
+.article-wrapper {
+    max-width: 900px;
+}
+
+/* --- 页脚样式 --- */
+footer {
+    background: #1a1c2e; /* 页脚用固定深色 */
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--text-secondary-dark);
+}
