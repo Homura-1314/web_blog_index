@@ -36,17 +36,65 @@
 
     <main>
         <div class="content-wrapper">
-            <div class="card tilt-effect fade-in">
-                <img src="images/avatar.png" alt="个人头像" class="avatar">
-                <h2>关于博主 & 本站</h2>
-                <p style="text-align: left; line-height: 1.8;">
-                    你好！我是三叶hikari，一名开发者，也是这个“三叶次元”空间的主人~
-                    <br><br>
-                    建立这个网站，是为了系统化地记录我在学习前端开发过程中的所思所想，将零散的知识点整理成体系。我相信，分享是最好的学习方式，输出能有效地检验和巩固输入。
-                    <br><br>
-                    希望这里的文字，能为你带来一些小小的启发。如果你想要获取源码点击右上角的github图标领取,如果你有任何疑问和意见欢迎提issues。Ciallo～(∠・ω< )⌒☆
-                </p>
-            </div>
+            <section class="about-hero fade-in">
+                <img src="images/avatar.png" alt="个人头像" class="avatar-large">
+                <h1 class="hero-title">你好，我是 <span class="gradient-text">三叶hikari</span></h1>
+                <p class="hero-subtitle">一名正在后端开发道路上探索前行的学习者。</p>
+            </section>
+    
+            <!-- ✨ 全新：学习探索区 ✨ -->
+            <section class="skills-section fade-in">
+                <h2><i class="fas fa-route"></i> 我的学习足迹</h2>
+                <div class="skills-grid">
+                    <!-- 编程语言 -->
+                    <div class="skill-card tilt-effect">
+                        <i class="fas fa-language skill-icon" style="color: #4A90E2;"></i>
+                        <h3>编程语言</h3>
+                        <p>已学习 C, Python, Java 等多种语言，打下了坚实的编程基础。</p>
+                    </div>
+                    <!-- 后端技术栈 -->
+                    <div class="skill-card tilt-effect">
+                        <i class="fas fa-server skill-icon" style="color: #f89820;"></i>
+                        <h3>后端技术栈</h3>
+                        <p>使用过Tomcat部署Web应用，通过 Maven 管理项目，并使用 MySQL 存储数据。</p>
+                    </div>
+                    <!-- Linux -->
+                    <div class="skill-card tilt-effect">
+                        <i class="fab fa-linux skill-icon" style="color: #333;"></i>
+                        <h3>Linux & Shell</h3>
+                        <p>了解 Linux 常用命令，能够编写简单的 Shell 脚本来完成自动化任务。</p>
+                    </div>
+                    <!-- 数据结构与算法 -->
+                    <div class="skill-card tilt-effect">
+                        <i class="fas fa-brain skill-icon" style="color: #e91e63;"></i>
+                        <h3>数据结构与算法</h3>
+                        <p>正在学习数据结构的路上，目前已探索至二叉树。对算法充满热情，并持续入门学习。</p>
+                    </div>
+                    <!-- 计算机网络 -->
+                    <div class="skill-card tilt-effect">
+                        <i class="fas fa-network-wired skill-icon" style="color: #34A853;"></i>
+                        <h3>计算机网络</h3>
+                        <p>对TCP/IP、HTTP等网络协议有基础的了解，明白Web应用是如何通信的。</p>
+                    </div>
+                    <!-- 前端 -->
+                    <div class="skill-card tilt-effect">
+                        <i class="fas fa-code skill-icon" style="color: #563d7c;"></i>
+                        <h3>前端探索</h3>
+                        <p>了解前端三剑客，了解vue3等框架</p>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- 关于本站 -->
+            <section class="about-station fade-in">
+                <div class="card">
+                    <h2><i class="fas fa-book-open"></i> 关于本站</h2>
+                    <p style="text-align: left; line-height: 1.8;">
+                        欢迎来到我的学习空间！“三叶次元”是我为了记录和沉淀技术学习而创建的。无论是后端逻辑的实现、数据结构的巧妙，还是这个网站本身从零到一的搭建过程，都是我学习路上的真实写照、目前博主正在学javaweb，在学习过程中能充分的了解和掌握前后端的搭建使用，搓完苍穹外卖后打算做个基于Vue+springboot的个人博客。
+                        <br><br>
+                        我相信，最好的学习就是不断实践与分享。如果你也是一位在路上的同行者，希望我的笔记能为你带来一丝启发。一起加油吧！Ciallo～(∠・ω< )⌒☆ </p>
+                </div>
+            </section>
         </div>
         </main>
         <footer>

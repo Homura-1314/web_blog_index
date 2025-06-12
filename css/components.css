@@ -608,3 +608,90 @@ a.article-card:hover .card-image-container::after {
     width: auto;
     padding: 12px 40px;
 }
+.about-hero {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.avatar-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.5); /* 假设你有 --primary-color-rgb */
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-color-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* 2. 技能区域 */
+.skills-section, .about-station {
+    padding: 3rem 0;
+}
+
+.skills-section h2, .about-station h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-card {
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skill-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow);
+}
+
+.skill-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.skill-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-color);
+}
+
+.skill-card p {
+    color: var(--text-color-secondary);
+    line-height: 1.6;
+}
+
+/* 3. 关于本站区域微调 */
+.about-station .card {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
