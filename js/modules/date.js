@@ -1,7 +1,7 @@
 import { showCustomAlert } from './ui.js'
 const articles = {
   "project-intro": {
-    title: "关于本站：三叶次元",
+    title: "关于本站：三叶✨次元",
     excerpt:
       "一个基于原生HTML/CSS/JS构建的个人博客空间。旨在探索现代前端设计的可能性，并记录学习过程中的思考与沉淀。欢迎你的到来！",
     image: "images/bg6.jpg",
@@ -9,18 +9,7 @@ const articles = {
     category: "博客",
     author: "三叶hikari",
     date: "2025-6-12",
-    content: `
-                <h2>欢迎来到“三叶次元”！</h2>
-                <p>你好！正如你所见，这是一个完全使用原生三剑客——HTML, CSS, 和 JavaScript 从零开始搭建的个人项目。它没有依赖任何主流框架,如React、Vue、srpingboot等，目的是为了回归本源，深入理解Web开发的底层逻辑。</p>
-                <h3>项目特点：</h3>
-                <ul>
-                    <li><strong>纯原生实现：</strong> 锻炼核心的DOM操作、事件处理和模块化编程能力。</li>
-                    <li><strong>响应式设计：</strong> 适配桌面和移动设备，保证在不同屏幕尺寸下都有良好的阅读体验。</li>
-                    <li><strong>主题切换：</strong> 支持亮色与暗色模式一键切换，并将用户偏好保存在本地。</li>
-                    <li><strong>动态交互：</strong> 包含了卡片悬停、背景轮播、打字机等多种CSS与JS实现的动效。</li>
-                </ul>
-                <p>创建这个网站不仅是为了展示技术，更是为了拥有一个完全属于自己的、可以自由挥洒创意的空间。希望这里的分享能给你带来一些启发。如果你对源码感兴趣，可以点击右上角的GitHub图标查看。Ciallo～(∠・ω< )⌒☆</p>
-            `,
+    content: ``,
   },
   "javascript-dom": {
     title: "赋予页面生命：JavaScript与DOM交互",
@@ -45,7 +34,6 @@ const articles = {
     date: "2025-6-12",
     content: `<h3>Docker是什么？</h3><p>Docker 是一个开源的应用容器引擎...</p>`,
   },
-
 };
 function createHeroArticleHTML(key, article) {
   return `
@@ -59,7 +47,7 @@ function createHeroArticleHTML(key, article) {
                 <span>${article.author} · ${article.date}</span>
             </div>
         </div>
-        <a href="article.html?topic=${key}" class="full-card-link" aria-label="阅读文章：${article.title}"></a>
+        <a href="about.html?topic=${key}" class="full-card-link" aria-label="阅读文章：${article.title}"></a>
     `;
 }
 function createArticleCardHTML(key, article) {

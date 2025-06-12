@@ -273,7 +273,7 @@ pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
 .secondary-tags {
     font-size: 0.9em;
     color: #888;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em; 
 }
 
 /* --- 4. 标准文章卡片 (精调版) --- */
@@ -490,7 +490,7 @@ a.article-card:hover .card-image-container img {
 #hero-article-card:hover .hero-card-bg {
     transform: scale(1.05);
 }
-#hero-article-card .tags { font-size: 0.9rem; color: #00bfff; font-weight: 600; margin-bottom: 1rem; }
+#hero-article-card .tags { font-size: 0.9rem; color: #00bfff; font-weight: 600; margin-bottom: 1rem; word-spacing: 0.8em}
 #hero-article-card h2 { font-size: 2.5rem; margin: 0 0 1rem; }
 #hero-article-card p { font-size: 1rem; line-height: 1.7; color: #e0e0e0; margin-bottom: 2rem; }
 #hero-article-card .card-meta { display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: #a0a0a0; }
