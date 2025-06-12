@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>注册-创想次元</title>
+    <title>注册-三叶✨次元</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
@@ -19,20 +19,21 @@
     <div class="auth-wrapper">
         <form class="auth-form" id="registerForm">
             <img src="images/logo.png" alt="Logo" class="auth-logo" onerror="this.style.display='none'">
-            <h2>加入创想次元</h2>
-
+            <h2>加入三叶✨次元</h2>
             <div class="form-group">
                 <input type="text" id="reg-username" placeholder="设置一个用户名" required>
+                <div class="validation-hint"></div>
             </div>
             <div class="form-group">
                 <input type="email" id="reg-email" placeholder="你的邮箱" required>
+                <div class="validation-hint"></div>
             </div>
             <div class="form-group">
                 <input type="password" id="reg-password" placeholder="设置密码" required>
+                <div class="validation-hint"></div>
             </div>
-
-            <button type="submit" class="btn">创建账号</button>
-
+            <button type="submit" class="btn" id="register-btn" disabled>创建账号</button>
+    
             <div class="form-footer">
                 <p>已有账号？ <a href="login.html">前往登录✨</a></p>
             </div>

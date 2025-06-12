@@ -128,12 +128,9 @@ export function music_player(){
                             }
                         }
                     }
-                    // 标记为已恢复，这样下次触发canplay时就不会再执行了
                     hasRestored = true;
                 }
             });
-
-            // 2. 切换歌曲时，需要重置'hasRestored'标记
             ap.on('listswitch', () => {
                 hasRestored = false;
             });
@@ -172,22 +169,16 @@ export function music_player(){
 export function initArticleFilter() {
     const filterBar = document.getElementById('filter-bar');
     if (!filterBar) return;
-
-    // 事件委托：将事件监听器添加到父元素上，效率更高
     filterBar.addEventListener('click', (e) => {
-        // 确保点击的是按钮
         if (e.target.tagName !== 'BUTTON') return;
 
         const button = e.target;
-        
-        // 切换按钮的 active 状态
         filterBar.querySelector('.active').classList.remove('active');
         button.classList.add('active');
 
         const filterValue = button.getAttribute('data-filter');
         const articleCards = document.querySelectorAll('#full-article-grid .article-card');
 
-        // 筛选文章卡片
         articleCards.forEach(card => {
             const cardCategory = card.getAttribute('data-category');
             if (filterValue === '全部' || filterValue === cardCategory) {
@@ -197,4 +188,148 @@ export function initArticleFilter() {
             }
         });
     });
+}
+export function initRegisterFormValidation() {
+  const form = document.getElementById("registerForm");
+  if (!form) return; // 如果不是注册页，则直接退出
+
+  const usernameInput = document.getElementById("reg-username");
+  const emailInput = document.getElementById("reg-email");
+  const passwordInput = document.getElementById("reg-password");
+  const submitBtn = document.getElementById("register-btn");
+
+  const usernameHint = usernameInput.nextElementSibling;
+  const emailHint = emailInput.nextElementSibling;
+  const passwordHint = passwordInput.nextElementSibling;
+
+  // --- 验证规则 ---
+  const rules = {
+    username: {
+      regex: /^[a-zA-Z0-9_\u4e00-\u9fa5]{4,16}$/,
+      hint: "4-16位，可包含字母、数字、中文、下划线",
+      invalid: "用户名格式不正确",
+    },
+    email: {
+      regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      hint: "请输入有效的邮箱地址",
+      invalid: "邮箱格式不正确",
+    },
+    password: {
+      regex: /^(?=.*[A-Za-z].)(?=.*\d)[A-Za-z\d.]{8,}$/,
+      hint: "至少8位，至少包含字母和数字",
+      invalid: "密码强度不足",
+    },
+  };
+
+  // 存储每个字段的验证状态
+  const validationStatus = {
+    username: false,
+    email: false,
+    password: false,
+  };
+
+  // --- 验证函数 ---
+  function validateField(input, rule, hintElement) {
+    const fieldName = input.id.split("-")[1];
+
+    if (input.value === "") {
+      hintElement.textContent = rule.hint;
+      hintElement.className = "validation-hint";
+      validationStatus[fieldName] = false;
+    } else if (rule.regex.test(input.value)) {
+      hintElement.textContent = "格式正确";
+      hintElement.className = "validation-hint valid";
+      validationStatus[fieldName] = true;
+    } else {
+      hintElement.textContent = rule.invalid;
+      hintElement.className = "validation-hint invalid";
+      validationStatus[fieldName] = false;
+    }
+    checkFormValidity();
+  }
+
+  // --- 检查整个表单是否有效 ---
+  function checkFormValidity() {
+    const isAllValid = Object.values(validationStatus).every(
+      (status) => status === true
+    );
+    submitBtn.disabled = !isAllValid;
+  }
+
+  // --- 绑定事件监听器 ---
+  usernameInput.addEventListener("input", () =>
+    validateField(usernameInput, rules.username, usernameHint)
+  );
+  emailInput.addEventListener("input", () =>
+    validateField(emailInput, rules.email, emailHint)
+  );
+  passwordInput.addEventListener("input", () =>
+    validateField(passwordInput, rules.password, passwordHint)
+  );
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    showCustomAlert("账号创建成功！即将跳转到登录页。", "注册成功").then(() => {
+      window.location.href = "login.html";
+    });
+  });  
+  // --- 初始化提示 ---
+  usernameHint.textContent = rules.username.hint;
+  emailHint.textContent = rules.email.hint;
+  passwordHint.textContent = rules.password.hint;
+}
+export function showCustomAlert(message, title = "提示") {
+  return new Promise((resolve) => {
+    // 1. 创建HTML结构
+    const modalHTML = `
+            <div class="custom-modal-overlay">
+                <div class="custom-modal-dialog" role="alertdialog" aria-labelledby="modal-title" aria-describedby="modal-message">
+                    <h3 id="modal-title">${title}</h3>
+                    <p id="modal-message">${message}</p>
+                    <button class="btn" id="modal-confirm-btn">确定</button>
+                </div>
+            </div>
+        `;
+
+    // 2. 插入到页面中
+    const modalWrapper = document.createElement("div");
+    modalWrapper.innerHTML = modalHTML;
+    document.body.appendChild(modalWrapper);
+
+    const overlay = modalWrapper.querySelector(".custom-modal-overlay");
+    const confirmBtn = modalWrapper.querySelector("#modal-confirm-btn");
+
+    // 触发显示动画
+    requestAnimationFrame(() => {
+      overlay.classList.add("visible");
+    });
+
+    // 3. 定义关闭函数
+    const closeModal = () => {
+      overlay.classList.remove("visible");
+      // 等待动画结束后再移除DOM
+      setTimeout(() => {
+        document.body.removeChild(modalWrapper);
+        resolve();
+      }, 300);
+    };
+
+    // 4. 绑定事件
+    confirmBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        // 仅当点击背景时关闭
+        closeModal();
+      }
+    });
+
+    // 增加Esc键关闭功能
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+        document.removeEventListener("keydown", handleEsc);
+      }
+    };
+    document.addEventListener("keydown", handleEsc);
+  });
 }

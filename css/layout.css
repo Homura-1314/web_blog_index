@@ -23,8 +23,7 @@ main {
 }
 .content-wrapper {
     width: 100%;  max-width: 1400px; 
-    /* 增加左右内边距，让内容不会紧贴屏幕边缘 */
-    padding: 0 2rem; /* 原来是 1rem */
+    padding: 0 2rem;
     box-sizing: border-box;
 }
 

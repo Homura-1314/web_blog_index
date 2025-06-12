@@ -1,16 +1,17 @@
+import { showCustomAlert } from './ui.js'
 const articles = {
   "project-intro": {
-    title: "关于本站：创想次元",
+    title: "关于本站：三叶次元",
     excerpt:
       "一个基于原生HTML/CSS/JS构建的个人博客空间。旨在探索现代前端设计的可能性，并记录学习过程中的思考与沉淀。欢迎你的到来！",
-    image: "images/bg6.jpg", // 您可以换成您喜欢的主图
+    image: "images/bg6.jpg",
     tags: "#JavaScript #HTML #CSS #Web",
     category: "博客",
     author: "三叶hikari",
-    date: "2024-07-15",
+    date: "2025-6-12",
     content: `
-                <h2>欢迎来到“创想次元”！</h2>
-                <p>你好！正如你所见，这是一个完全使用原生三剑客——HTML, CSS, 和 JavaScript 从零开始搭建的个人项目。它没有依赖任何主流框架（如React或Vue），目的是为了回归本源，深入理解Web开发的底层逻辑。</p>
+                <h2>欢迎来到“三叶次元”！</h2>
+                <p>你好！正如你所见，这是一个完全使用原生三剑客——HTML, CSS, 和 JavaScript 从零开始搭建的个人项目。它没有依赖任何主流框架,如React、Vue、srpingboot等，目的是为了回归本源，深入理解Web开发的底层逻辑。</p>
                 <h3>项目特点：</h3>
                 <ul>
                     <li><strong>纯原生实现：</strong> 锻炼核心的DOM操作、事件处理和模块化编程能力。</li>
@@ -22,7 +23,6 @@ const articles = {
             `,
   },
   "javascript-dom": {
-    // --- 请确保这个对象也拥有和上面一样的所有属性 ---
     title: "赋予页面生命：JavaScript与DOM交互",
     excerpt:
       "学习如何使用JavaScript操作页面元素 (DOM)，响应用户交互，让你的网页“活”起来。",
@@ -30,26 +30,24 @@ const articles = {
     tags: "#JavaScript #DOM #Core",
     category: "核心",
     author: "三叶hikari",
-    date: "2024-07-05",
+    date: "2025-6-12",
     content: `<p>静态的网页虽然美丽，但却缺少互动...</p>`,
   },
 
   "docker-intro": {
-    // --- 这个也一样，所有属性都要补全 ---
     title: "docker入门",
     excerpt:
       "1.docker概述, 1.1 基本介绍 Docker 是一个开源的应用容器引擎，可以轻松地为任何应用创建一个轻量级的、可移植的、自给自足的容器。",
-    image: "images/bg4.jpg", // 确保这是一个有效的本地图片路径
+    image: "images/bg4.jpg",
     tags: "#Docker #DevOps",
     category: "服务部署",
-    author: "花火",
-    date: "Jul 28, 2022",
+    author: "三叶hikari",
+    date: "2025-6-12",
     content: `<h3>Docker是什么？</h3><p>Docker 是一个开源的应用容器引擎...</p>`,
   },
-  // ... 其他所有文章条目都应如此
+
 };
 function createHeroArticleHTML(key, article) {
-  // 这个函数现在生成包括背景在内的所有HTML
   return `
         <div class="hero-card-bg" style="background-image: url('${article.image}');"></div>
         <div class="hero-content-part">
@@ -66,9 +64,7 @@ function createHeroArticleHTML(key, article) {
 }
 function createArticleCardHTML(key, article) {
     if (!article) return '';
-
-    // 如果某个属性不存在，就使用一个默认值，而不是显示'undefined'
-    const imageUrl = article.image || "images/bg4.jpg"; // 比如用一张默认图
+    const imageUrl = article.image || "images/bg4.jpg"; //用一张默认图
     const title = article.title || '无标题文章';
     const excerpt = article.excerpt || '暂无描述...';
     const author = article.author || '匿名作者';
@@ -109,7 +105,6 @@ export function post_data() {
     const heroArticleKey = articleKeys[0];
     const heroArticle = articles[heroArticleKey];
     if (heroArticle) {
-      // 现在只需要一步操作：将生成的所有HTML一次性插入
       heroContainer.innerHTML = createHeroArticleHTML(
         heroArticleKey,
         heroArticle
@@ -117,10 +112,8 @@ export function post_data() {
     }
   }
 
-  // --- 3. 填充推荐文章 (跳过第一篇，加载第2、3篇) ---
   if (recommendedGrid) {
     let recommendedHTML = "";
-    // **重要**：改回 slice(1, 3)
     const recommendedKeys = articleKeys.slice(1, 3);
     recommendedKeys.forEach((key) => {
       const article = articles[key];
@@ -130,8 +123,6 @@ export function post_data() {
     });
     recommendedGrid.innerHTML = recommendedHTML;
   }
-
-  // ... (后续填充所有文章和筛选按钮的逻辑保持不变)
   if (fullGrid) {
     let fullHTML = "";
     articleKeys.forEach((key) => {
@@ -170,46 +161,48 @@ export function post_data() {
 }
 
 export function content_logic(){
-     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const navAuthLink = document.getElementById('nav-auth-link');
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const navAuthLink = document.getElementById("nav-auth-link");
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-    // 登录认证逻辑...
-    if (navAuthLink) {
-        if (loggedIn) {
-            navAuthLink.textContent = '退出';
-            navAuthLink.href = '#';
-            navAuthLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                localStorage.removeItem('isLoggedIn');
-                alert('您已成功退出！');
-                window.location.href = 'login.html';
-            });
-        } else {
-            navAuthLink.textContent = '登录';
-            navAuthLink.href = 'login.html';
-        }
+  // 登录认证逻辑...
+  if (navAuthLink) {
+    if (loggedIn) {
+      navAuthLink.textContent = "退出";
+      navAuthLink.href = "#";
+      navAuthLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        localStorage.removeItem("isLoggedIn");
+        showCustomAlert("您已成功退出！", "操作成功").then(() => {
+          window.location.href = "login.html";
+        });
+      });
+    } else {
+      navAuthLink.textContent = "登录";
+      navAuthLink.href = "login.html";
     }
-    
-    // 页面保护逻辑...
-    const protectedPages = ['index.html','about.html', 'article.html'];
-    if (protectedPages.includes(currentPage) && !loggedIn) {
-        alert('请先登录以访问该页面！');
-        window.location.href = 'login.html';
-    }
+  }
 
-    // 文章详情页渲染逻辑...
-    if (currentPage === 'article.html') {
-        const articleWrapper = document.querySelector('.article-wrapper');
-        if (!articleWrapper) return;
-        
-        const params = new URLSearchParams(window.location.search);
-        const topic = params.get('topic');
-        const article = articles[topic];
-        
-        if (article) {
-            document.title = article.title + " | 创想次元";
-            articleWrapper.innerHTML = `
+  // 页面保护逻辑...
+  const protectedPages = ["index.html", "about.html", "article.html"];
+  if (protectedPages.includes(currentPage) && !loggedIn) {
+    showCustomAlert("请先登录以访问该页面！", "访问受限").then(() => {
+      window.location.href = "login.html";
+    });
+  }
+
+  // 文章详情页渲染逻辑...
+  if (currentPage === "article.html") {
+    const articleWrapper = document.querySelector(".article-wrapper");
+    if (!articleWrapper) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const topic = params.get("topic");
+    const article = articles[topic];
+
+    if (article) {
+      document.title = article.title + " | 三叶次元";
+      articleWrapper.innerHTML = `
                 <div class="article-content">
                     <h1>${article.title}</h1>
                     <div class="card-meta" style="justify-content: flex-start; margin-bottom: 2rem; color: var(--text-color-secondary);">
@@ -219,31 +212,25 @@ export function content_logic(){
                     ${article.content}
                 </div>
             `;
-            if (typeof Prism !== 'undefined') {
-                Prism.highlightAll();
-            }
-        } else {
-            articleWrapper.innerHTML = `<div class="article-content"><h1>文章未找到</h1><p>抱歉，我们没有找到这篇次元知识。尝试返回<a href='index.html'>首页</a>看看吧。</p></div>`;
-        }
+      if (typeof Prism !== "undefined") {
+        Prism.highlightAll();
+      }
+    } else {
+      articleWrapper.innerHTML = `<div class="article-content"><h1>文章未找到</h1><p>抱歉，我们没有找到这篇次元知识。尝试返回<a href='index.html'>首页</a>看看吧。</p></div>`;
     }
-    
-        // 表单处理 ---
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                localStorage.setItem('isLoggedIn', 'true');
-                alert('登录成功！');
-                window.location.href = 'index.html';
-            });
-        }
-        // (ui)验证账号
-        const registerForm = document.getElementById('registerForm');
-        if (registerForm) {
-            registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('账号创建成功！请登录。');
-                window.location.href = 'login.html';
-            });
-        }
+  }
+  // --- 表单处理 ---
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      localStorage.setItem("isLoggedIn", "true");
+      showCustomAlert(
+        "登录成功！欢迎回来，即将带您进入次元空间~",
+        "登录成功"
+      ).then(() => {
+        window.location.href = "index.html";
+      });
+    });
+  }
 }

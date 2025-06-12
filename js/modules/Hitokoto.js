@@ -11,7 +11,6 @@
         signal: controller.signal
     });
     clearTimeout(id);
-
     return response;
 }
 
@@ -50,12 +49,10 @@ export function inithitok_to() {
     if (refreshBtn) {
         refreshBtn.addEventListener('click', () => {
             fetchHitokoto();
-            // 手动刷新后，重置定时器，避免立即又刷新一次
             clearInterval(hitokotoInterval);
             startHitokotoInterval();
         });
     }
-
         // 定时器逻辑
         function startHitokotoInterval() {
             hitokotoInterval = setInterval(fetchHitokoto, 25000); // 每25秒自动刷新
@@ -64,5 +61,3 @@ export function inithitok_to() {
         fetchHitokoto(); // 立即获取第一条
         startHitokotoInterval(); // 启动定时器
 }
-
-    

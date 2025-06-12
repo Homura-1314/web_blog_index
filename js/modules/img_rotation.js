@@ -15,7 +15,7 @@
   export function init_img_rotion() {
     const slideshowContainer = document.getElementById("slideshow-container");
   if (slideshowContainer) {
-    const totalImages = 12; // 您的图片总数
+    const totalImages = 12; // 图片总数
     const displayDuration = 15000; // 每张图片显示时长
 
     const images = [];
@@ -54,11 +54,8 @@
           lastSlide.classList.add("previous");
 
           // 2. 激活下一张图的动画，它会覆盖在上一张图之上
-          nextSlide.classList.remove("previous"); // 先清理状态
+          nextSlide.classList.remove("previous");
           nextSlide.classList.add("active");
-
-          // 3. 在下一张图的动画开始后，再把更早的图片的previous类移除，让它回到待命状态
-          // 找到除了当前和上一张之外的所有图片
           slides.forEach((slide, index) => {
             if (index !== lastImageIndex && index !== nextImageIndex) {
               slide.classList.remove("previous");
