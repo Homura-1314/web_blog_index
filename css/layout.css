@@ -1,57 +1,62 @@
 /* --- 顶部导航布局 --- */
 header {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 1rem 5%; box-sizing: border-box; z-index: 1000;
-    background: rgba(0, 0, 0, .25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 5%; 
+    box-sizing: border-box;
+    z-index: 1000;
+    background: var(--card-bg-color); 
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s;
 }
+
+/* 导航栏在滚动后可以变色，增加体验 */
+header.scrolled {
+    background: rgba(29, 35, 42, 0.85); /* 半透明背景 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
 nav {
-    display: flex; justify-content: space-between; align-items: center;
-    max-width: 1200px; margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* --- 登录/注册页布局 --- */
 .auth-wrapper {
-    display: flex; justify-content: center; align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
 }
 
 /* --- 内容页面主布局 --- */
 main {
-    padding-top: 100px; padding-bottom: 4rem;
-    display: flex; justify-content: center; align-items: flex-start;
-    box-sizing: border-box; flex-grow: 1;
-}
-.content-wrapper {
-    width: 100%;  max-width: 1400px; 
-    padding: 0 2rem;
+    padding-top: 80px; /* header的高度 */
     box-sizing: border-box;
+    flex-grow: 1; /* 用于粘性页脚 */
 }
 
-/* --- 文章列表与详情页布局 --- */
-.article-list { display: flex; flex-direction: column; gap: 1.5rem; }
-.article-wrapper { max-width: 900px; width: 100%; }
+/* --- 通用内容包裹器 (用于首页、关于页) --- */
+.content-wrapper {
+    width: 100%;
+    max-width: 1400px; 
+    padding: 2rem;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* --- 页脚布局 --- */
 footer {
-    background: rgba(0, 0, 0, .2);
+    background: var(--card-bg-color);
     padding: 2rem 1rem;
-    text-align: center; color: rgba(255, 255, 255, .7);
-}
-
-/* --- 背景布局 --- */
-#slideshow-container, .bg-container {
-    position: fixed; height: 100%; width: 100%;
-    left: 0; top: 0; background-size: cover; background-position: center;
-}
-#slideshow-container { z-index: -2; }
-.bg-container { z-index: -1; }
-
-.wave-background {
-    position: fixed; top: 0; left: 0; width: 100%;
-    height: 50vh; z-index: -1; overflow: hidden;
-}
-.wave-background-bottom {
-    position: fixed; bottom: 0; left: 0; width: 100%; height: 10px;
-    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-    z-index: -1;
+    text-align: center;
+    color: var(--text-color-secondary);
+    border-top: 1px solid var(--border-color);
 }

@@ -81,80 +81,7 @@ nav .user-actions a.btn { background: linear-gradient(45deg, var(--primary-color
 .copy-container .icon-check { opacity: 0; transform: translate(-50%, -50%) scale(.5); }
 .copy-container.copied .icon-copy { opacity: 0; transform: translate(-50%, -50%) scale(.5); }
 .copy-container.copied .icon-check { opacity: 1; transform: translate(-50%, -50%) scale(1); color: #4caf50; }
-
-/* --- 沉浸式文章卡片--- */
-.article-card-new { position: relative; display: block; height: 380px; border-radius: 16px; overflow: hidden; margin-bottom: 2.5rem; color: var(--text-light); background-color: #2a2a2e; border: 1px solid rgba(255, 255, 255, .1); }
-.article-card-new .card-bg-image { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.25, .46, .45, .94); }
-.article-card-new:hover .card-bg-image { transform: scale(1.05); }
-.article-card-new .card-content-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 2.5rem; background: linear-gradient(to top, rgba(0, 0, 0, .98) 30%, transparent); }
-.article-card-new .card-tags { font-size: .9rem; color: var(--gradient-start); font-weight: 700; text-transform: uppercase; }
-.article-card-new .card-title { font-size: 2.2rem; margin: .5rem 0; font-weight: 700; color: #fff; }
-.article-card-new .card-excerpt { color: #b0b0b0; font-size: .95rem; line-height: 1.6; }
-.article-card-new .card-meta { display: flex; align-items: center; gap: .8rem; margin-top: 1.5rem; font-size: .9rem; color: #888; }
-.article-card-new .card-meta img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .2); }
-
-/* --- 左右布局文章卡片 --- */
-a.article-card {
-    display: flex;
-    flex-direction: column; /* 改为垂直布局 */
-    border-radius: 16px;
-    color: var(--text-color);
-    background: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-a.article-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-}
-
-.card-content {
-    padding: 1.5rem;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* 让内容区域填满剩余空间 */
-}
-.card-content .tags { /* 确保卡片内的标签样式 */
-    font-size: 0.8rem;
-    color: var(--secondary-color);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-.card-content h3 {
-    margin: 0 0 0.8rem;
-    font-size: 1.4rem;
-    color: var(--text-color);
-}
-.card-excerpt {
-    font-size: 0.9rem;
-    color: var(--text-color-secondary);
-    line-height: 1.6;
-    flex-grow: 1;
-    margin-bottom: 1rem;
-}
-.card-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    color: var(--text-color-secondary);
-}
-.card-meta img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-}
 .card-meta .tag { padding: .2rem .6rem; border-radius: 10px; background-color: rgba(0, 0, 0, .2); }
-
-/* --- 文章详情页内容 --- */
-.article-content { text-align: left; line-height: 1.8; }
-.article-content h3 { margin-top: 2.5rem; border-left: 4px solid var(--secondary-color); padding-left: 1rem; }
-.article-content li, .article-content p { color: #c9c9c9; }
-.article-content strong, .skill-badge i, #refresh-hitokoto:hover, .social-links a:hover, .user-actions .social-icon:hover { color: var(--secondary-color); }
-.article-content ul { list-style-type: '✨'; padding-left: 2rem; }
-.article-content a { color: var(--primary-color); }
 pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
 
 /* --- 页脚组件 --- */
@@ -216,32 +143,9 @@ pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
 }
 
 
-.filter-bar button.filter-btn:hover {
+.filter-bar button{
     color: var(--text-color);
 }
-/* Active 状态: 渐变背景 */
-.filter-bar button.filter-btn.active {
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: #fff;
-    padding: 0.5rem 1.5rem;
-}
-/* 数字统计的样式 */
-.tag-count {
-    font-size: 0.8em;
-    color: #777;
-    margin-left: 0.6em;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-.filter-bar button.filter-btn:hover .tag-count {
-    color: #bbb;
-}
-/* Active 状态下数字也变白 */
-.filter-bar button.filter-btn.active .tag-count {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-
 /* --- 多层次卡片标签系统 --- */
 .card-tags-container {
     display: flex;
@@ -290,13 +194,6 @@ a.article-card {
 a.article-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.card-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s;
 }
 a.article-card:hover .card-image-container img {
     transform: scale(1.05);
@@ -389,6 +286,21 @@ a.article-card:hover .card-image-container img {
     display: flex;
     align-items: center;
 }
+
+/* Active 状态: 渐变背景 */
+.filter-bar button.filter-btn.active {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    padding: 0.5rem 1.5rem;
+}
+.filter-bar button .tag-count {
+    color: #bbb;
+}
+/* Active 状态下数字也变白 */
+.filter-bar button.active .tag-count {
+    color: rgba(255, 255, 255, 0.8);
+}
+
 
 .filter-bar-vertical .filter-btn:hover {
     color: var(--text-color);
@@ -496,6 +408,12 @@ a.article-card:hover .card-image-container img {
 #hero-article-card .card-meta { display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; color: #a0a0a0; }
 #hero-article-card .card-meta img { width: 32px; height: 32px; border-radius: 50%; }
 
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
 .card-image-container {
     width: 100%;
     height: 200px;
@@ -564,11 +482,6 @@ a.article-card:hover .card-image-container::after {
     transition: opacity 0.3s ease;
 }
 
-/* 显示时的动画 */
-.custom-modal-overlay.visible {
-    opacity: 1;
-}
-
 .custom-modal-dialog {
     background: var(--card-bg-color);
     color: var(--text-color);
@@ -590,7 +503,7 @@ a.article-card:hover .card-image-container::after {
 }
 
 .custom-modal-dialog h3 {
-    font-family: 'ZCOOL KuaiLe', sans-serif;
+    /* font-family: 'ZCOOL KuaiLe', sans-serif; */
     font-size: 1.8rem;
     margin-top: 0;
     margin-bottom: 1rem;
@@ -694,4 +607,160 @@ a.article-card:hover .card-image-container::after {
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
+}
+/* 1. 顶部全宽图片横幅 */
+.article-hero-banner {
+    width: 100%;
+    height: 45vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* 2. 横幅底部的渐变遮罩，用于与下方内容柔和过渡 */
+.article-hero-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background: linear-gradient(to top, var(--body-bg-color) 15%, transparent 100%);
+}
+
+/* 3. 居中的文章内容包裹器 */
+.article-wrapper {
+    width: 100%;
+    max-width: 1350px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    margin-top: -150px;
+    padding-bottom: 3rem;
+}
+
+/* 4. 悬浮的文章主体卡片 */
+.article-body-card {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 3rem 4rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* 5. 卡片内的文章标题 */
+.article-title {
+    font-size: 2.8rem;
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+/* 6. 卡片内的元信息 */
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--text-color-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.article-meta img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.article-meta .separator {
+    font-weight: bold;
+}
+
+.article-meta .category-tag {
+    background-color: rgba(128, 128, 128, 0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+}
+
+/* 7. 文章正文内容排版 */
+.article-content {
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.article-content p {
+    margin-bottom: 1.5em;
+}
+
+.article-content h2 {
+    position: relative; /* 1. 关键：让 <h2> 成为定位容器 */
+    font-size: 2rem;
+    margin-top: 3em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em; /* 2. 稍微增加一点标题和下划线之间的距离 */
+    border-bottom: 1px solid var(--border-color); /* 3. 保留原有的浅色下划线作为背景 */
+}
+/* 4. 使用 ::after 伪元素创建渐变下划线 */
+.article-content h2::after {
+    content: ''; /* 伪元素必须有这个才能显示 */
+    position: absolute;
+    left: 0;
+    bottom: 15px; /* 5. 关键：让渐变线刚好覆盖在 border-bottom 上 */
+    width: 50px; /* 6. 定义下划线的宽度，可以根据喜好调整 */
+    height: 5px; /* 下划线的高度 */
+    /* 应用你网站已有的渐变色变量 */
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 2px; /* 7. 让下划线两端更圆润好看 */
+}
+
+.article-content h3 {
+    font-size: 1.6rem;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.article-content h3::before {
+    content: '❏';
+    color: var(--primary-color);
+    margin-right: 0.5em;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 2em;
+    margin-bottom: 1.5em;
+}
+
+.article-content pre[class*="language-"] {
+    position: relative;
+    border-radius: 8px;
+    padding: 1.5em;
+    font-size: 0.9em;
+    margin: 2em 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.article-content pre[class*="language-"]::after {
+    content: ''; /* 伪元素必须有这个才能显示 */
+    position: absolute; /* 相对于 <pre> 元素进行定位 */
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); 
+}
+.content-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    /* ✨ 新增：让它自己水平居中 ✨ */
+    margin-left: auto;
+    margin-right: auto;
 }

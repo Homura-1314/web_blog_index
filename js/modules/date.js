@@ -1,40 +1,9 @@
-import { showCustomAlert } from './ui.js'
-const articles = {
-  "project-intro": {
-    title: "关于本站：三叶✨次元",
-    excerpt:
-      "一个基于原生HTML/CSS/JS构建的个人博客空间。旨在探索现代前端设计的可能性，并记录学习过程中的思考与沉淀。欢迎你的到来！",
-    image: "images/bg6.jpg",
-    tags: "#JavaScript #HTML #CSS #Web",
-    category: "博客",
-    author: "三叶hikari",
-    date: "2025-6-12",
-    content: ``,
-  },
-  "javascript-dom": {
-    title: "赋予页面生命：JavaScript与DOM交互",
-    excerpt:
-      "学习如何使用JavaScript操作页面元素 (DOM)，响应用户交互，让你的网页“活”起来。",
-    image: "images/bg6.jpg",
-    tags: "#JavaScript #DOM #Core",
-    category: "核心",
-    author: "三叶hikari",
-    date: "2025-6-12",
-    content: `<p>静态的网页虽然美丽，但却缺少互动...</p>`,
-  },
+// js/modules/date.js (最终修复版)
 
-  "docker-intro": {
-    title: "docker入门",
-    excerpt:
-      "1.docker概述, 1.1 基本介绍 Docker 是一个开源的应用容器引擎，可以轻松地为任何应用创建一个轻量级的、可移植的、自给自足的容器。",
-    image: "images/bg4.jpg",
-    tags: "#Docker #DevOps",
-    category: "服务部署",
-    author: "三叶hikari",
-    date: "2025-6-12",
-    content: `<h3>Docker是什么？</h3><p>Docker 是一个开源的应用容器引擎...</p>`,
-  },
-};
+import { showCustomAlert } from "./ui.js";
+import { articles } from "./data_basa.js";
+
+// --- HTML模板创建函数 (保持不变，链接已修正) ---
 function createHeroArticleHTML(key, article) {
   return `
         <div class="hero-card-bg" style="background-image: url('${article.image}');"></div>
@@ -47,23 +16,25 @@ function createHeroArticleHTML(key, article) {
                 <span>${article.author} · ${article.date}</span>
             </div>
         </div>
-        <a href="about.html?topic=${key}" class="full-card-link" aria-label="阅读文章：${article.title}"></a>
+        <a href="article.html?topic=${key}" class="full-card-link" aria-label="阅读文章：${article.title}"></a>
     `;
 }
+
 function createArticleCardHTML(key, article) {
-    if (!article) return '';
-    const imageUrl = article.image || "images/bg4.jpg"; //用一张默认图
-    const title = article.title || '无标题文章';
-    const excerpt = article.excerpt || '暂无描述...';
-    const author = article.author || '匿名作者';
-    const date = article.date || '';
-    const category = (article.category || '未分类').replace('#', '').trim();
-    const tags = article.tags || '';
-    return `
-        <a href="article.html?topic=${key}" class="article-card" data-category="${category}">
-            <div class="card-image-container">
-                <img src="${imageUrl}" alt="${title}">
-            </div>
+  if (!article) return "";
+  const imageUrl = article.image || "images/bg4.jpg";
+  const title = article.title || "无标题文章";
+  const excerpt = article.excerpt || "暂无描述...";
+  const author = article.author || "匿名作者";
+  const date = article.date || "未知日期";
+  const category = (article.category || "未分类").replace("#", "").trim();
+  const tags = article.tags || "";
+  const html_url =
+    key === "project-intro" ? "about.html" : `article.html?topic=${key}`;
+
+  return `
+        <a href="${html_url}" class="article-card" data-category="${category}">
+            <div class="card-image-container"><img src="${imageUrl}" alt="${title}"></div>
             <div class="card-content">
                 <div class="card-tags-container">
                     <span class="primary-tag" data-category="${category}">${category}</span>
@@ -79,90 +50,70 @@ function createArticleCardHTML(key, article) {
         </a>
     `;
 }
+// --- 首页数据填充函数 (保持不变) ---
 export function post_data() {
   const articleKeys = Object.keys(articles);
   if (articleKeys.length === 0) return;
-
-  // --- 1. 获取所有容器 ---
   const heroContainer = document.getElementById("hero-article-card");
   const recommendedGrid = document.getElementById("recommended-article-grid");
   const fullGrid = document.getElementById("full-article-grid");
   const filterBar = document.getElementById("filter-bar");
-
   if (heroContainer) {
     const heroArticleKey = articleKeys[0];
-    const heroArticle = articles[heroArticleKey];
-    if (heroArticle) {
-      heroContainer.innerHTML = createHeroArticleHTML(
-        heroArticleKey,
-        heroArticle
-      );
-    }
+    heroContainer.innerHTML = createHeroArticleHTML(
+      heroArticleKey,
+      articles[heroArticleKey]
+    );
   }
-
   if (recommendedGrid) {
-    let recommendedHTML = "";
-    const recommendedKeys = articleKeys.slice(1, 3);
-    recommendedKeys.forEach((key) => {
-      const article = articles[key];
-      if (article) {
-        recommendedHTML += createArticleCardHTML(key, article);
-      }
-    });
-    recommendedGrid.innerHTML = recommendedHTML;
+    recommendedGrid.innerHTML = articleKeys
+      .slice(1, 3)
+      .map((key) => createArticleCardHTML(key, articles[key]))
+      .join("");
   }
   if (fullGrid) {
-    let fullHTML = "";
-    articleKeys.forEach((key) => {
-      const article = articles[key];
-      if (article) {
-        fullHTML += createArticleCardHTML(key, article);
-      }
-    });
-    fullGrid.innerHTML = fullHTML;
+    fullGrid.innerHTML = articleKeys
+      .map((key) => createArticleCardHTML(key, articles[key]))
+      .join("");
   }
-
   if (filterBar) {
-    const categories = new Set();
     const categoryCounts = {};
-
+    const categories = [
+      ...new Set(
+        articleKeys
+          .map((key) => articles[key].category.replace("#", "").trim())
+          .filter(Boolean)
+      ),
+    ];
     articleKeys.forEach((key) => {
       const cat = articles[key].category.replace("#", "").trim();
-      if (cat) {
-        categories.add(cat);
-        categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
-      }
+      if (cat) categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
     });
-
     let filterButtonsHTML = `<button class="filter-btn active" data-filter="全部">全部</button>`;
     categories.forEach((cat) => {
-      const count = categoryCounts[cat] || 0;
-      filterButtonsHTML += `
-                <button class="filter-btn" data-filter="${cat}">
-                    ${cat}
-                    <span class="tag-count">${count}</span>
-                </button>
-            `;
+      filterButtonsHTML += `<button class="filter-btn" data-filter="${cat}">${cat}<span class="tag-count">${
+        categoryCounts[cat] || 0
+      }</span></button>`;
     });
     filterBar.innerHTML = filterButtonsHTML;
   }
 }
 
-export function content_logic(){
+// --- ✨ 重构函数 1：专门处理认证和页面保护 ---
+export function handleAuth() {
   const loggedIn = localStorage.getItem("isLoggedIn") === "true";
   const navAuthLink = document.getElementById("nav-auth-link");
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  // 登录认证逻辑...
   if (navAuthLink) {
     if (loggedIn) {
       navAuthLink.textContent = "退出";
       navAuthLink.href = "#";
-      navAuthLink.addEventListener("click", function (e) {
+      navAuthLink.addEventListener("click", (e) => {
         e.preventDefault();
         localStorage.removeItem("isLoggedIn");
         showCustomAlert("您已成功退出！", "操作成功").then(() => {
-          window.location.href = "login.html";
+          if (currentPage !== "login.html") window.location.href = "login.html";
         });
       });
     } else {
@@ -171,54 +122,73 @@ export function content_logic(){
     }
   }
 
-  // 页面保护逻辑...
   const protectedPages = ["index.html", "about.html", "article.html"];
   if (protectedPages.includes(currentPage) && !loggedIn) {
     showCustomAlert("请先登录以访问该页面！", "访问受限").then(() => {
       window.location.href = "login.html";
     });
+    return true; // 返回 true，表示需要中断后续脚本
   }
 
-  // 文章详情页渲染逻辑...
-  if (currentPage === "article.html") {
-    const articleWrapper = document.querySelector(".article-wrapper");
-    if (!articleWrapper) return;
-
-    const params = new URLSearchParams(window.location.search);
-    const topic = params.get("topic");
-    const article = articles[topic];
-
-    if (article) {
-      document.title = article.title + " | 三叶次元";
-      articleWrapper.innerHTML = `
-                <div class="article-content">
-                    <h1>${article.title}</h1>
-                    <div class="card-meta" style="justify-content: flex-start; margin-bottom: 2rem; color: var(--text-color-secondary);">
-                         <span>By ${article.author} on ${article.date}</span>
-                         <span class="tag">${article.category}</span>
-                    </div>
-                    ${article.content}
-                </div>
-            `;
-      if (typeof Prism !== "undefined") {
-        Prism.highlightAll();
-      }
-    } else {
-      articleWrapper.innerHTML = `<div class="article-content"><h1>文章未找到</h1><p>抱歉，我们没有找到这篇次元知识。尝试返回<a href='index.html'>首页</a>看看吧。</p></div>`;
-    }
-  }
-  // --- 表单处理 ---
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
+    loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
       localStorage.setItem("isLoggedIn", "true");
-      showCustomAlert(
-        "登录成功！欢迎回来，即将带您进入次元空间~",
-        "登录成功"
-      ).then(() => {
-        window.location.href = "index.html";
-      });
+      showCustomAlert("登录成功！即将带您进入次元空间~", "登录成功").then(
+        () => {
+          window.location.href = "index.html";
+        }
+      );
     });
+  }
+  return false; // 返回 false，表示一切正常
+}
+
+// --- ✨ 重构函数 2：专门渲染文章详情页 (增加幂等性检查) ---
+export function renderArticlePage() {
+  const banner = document.querySelector(".article-hero-banner");
+  const articleWrapper = document.querySelector(".article-wrapper");
+  if (
+    !banner ||
+    !articleWrapper ||
+    articleWrapper.querySelector(".article-body-card")
+  ) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const topic = params.get("topic");
+  const article = articles[topic];
+
+  if (article) {
+    banner.style.backgroundImage = `url('${
+      article.image || "images/bg4.jpg"
+    }')`;
+    document.title = `${article.title} | 三叶次元`;
+    articleWrapper.innerHTML = `
+            <div class="article-body-card">
+                <h1 class="article-title">${article.title}</h1>
+                <div class="article-meta">
+                    <img src="images/avatar.png" alt="${article.author}">
+                    <span>${article.author}</span><span class="separator">·</span>
+                    <span>${article.date}</span><span class="separator">·</span>
+                    <span class="category-tag">${article.category}</span>
+                </div>
+                <div class="article-content">${article.content}</div>
+            </div>
+        `;
+    if (typeof Prism !== "undefined") Prism.highlightAll();
+  } else {
+    document.title = "文章未找到 | 三叶次元";
+    articleWrapper.innerHTML = `
+            <div class="article-body-card">
+                <h1 class="article-title">文章未找到</h1>
+                <div class="article-content">
+                    <p>抱歉，你所要查找的文章不存在或已被移动。请检查链接是否正确，或返回首页查看其他内容。</p>
+                    <a href="index.html" class="btn" style="width: auto; padding: 12px 30px; margin-top: 1rem;">返回首页</a>
+                </div>
+            </div>
+        `;
   }
 }

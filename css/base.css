@@ -24,7 +24,7 @@ body {
 body.dark-theme {
     --text-color: #e5e7eb;
     --text-color-secondary: #9ca3af;
-    --card-bg-color: #1e293b;
+    --card-bg-color: #07090eba;
     --body-bg-color: #0f172a;
     --border-color: #334155;
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
