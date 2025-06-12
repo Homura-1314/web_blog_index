@@ -1,10 +1,22 @@
 /* --- 导航内组件 --- */
-nav a.logo { font-size: 1.8rem; color: #fff; text-shadow: 0 0 8px var(--primary-color); }
+nav a.logo { 
+    font-size: 1.8rem; 
+    color: var(--text-color); /* ✨ 修改 */
+    text-shadow: 0 0 8px var(--primary-color); 
+}
 nav .nav-links { flex-grow: 1; text-align: center; }
-nav .nav-links a { color: #fff; text-decoration: none; margin: 0 1.5rem; font-weight: 600; }
+nav .nav-links a { 
+    color: var(--text-color); /* ✨ 修改 */
+    text-decoration: none; 
+    margin: 0 1.5rem; 
+    font-weight: 600; 
+}
+body:not(.dark-theme) nav a.logo {
+    text-shadow: none;
+}
 nav .user-actions { display: flex; align-items: center; gap: 1rem; }
 nav .user-actions a.btn { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); padding: 8px 20px; border-radius: 50px; color: #fff; text-decoration: none; font-weight: 600; }
-.user-actions .social-icon { color: #fff; font-size: 1.5rem; transition: color .3s; }
+.user-actions .social-icon { color: var(--text-color);  font-size: 1.5rem; transition: color .3s; }
 
 /* --- 背景动画组件 --- */
 #slideshow-container {
@@ -109,12 +121,13 @@ pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
     padding: 2px;
     position: relative;
     background: linear-gradient(135deg, #E94057, #8A2387);
-    color: #fff;
+    color: var(--text-color-light);
+    display: flex;
 }
 .editor-selection-content {
-    background-color: #1f2229;
+    background-color: var(--card-bg-color);
     border-radius: 14px;
-    height: 100%;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -185,7 +198,7 @@ a.article-card {
     display: flex;
     flex-direction: column;
     border-radius: 16px;
-    background: #1f2229;
+    background: var(--card-bg-color); 
     color: var(--text-color);
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
@@ -222,7 +235,7 @@ a.article-card:hover .card-image-container img {
 }
 .card-excerpt {
     font-size: 0.9rem;
-    color: #a0a0a0; /* 调亮一点 */
+    color: var(--text-color-secondary);
     line-height: 1.6;
     flex-grow: 1;
     margin-bottom: 1rem;
@@ -531,7 +544,7 @@ a.article-card:hover .card-image-container::after {
     height: 150px;
     border-radius: 50%;
     border: 5px solid var(--primary-color);
-    box-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.5); /* 假设你有 --primary-color-rgb */
+    box-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.5);
     margin-bottom: 1.5rem;
 }
 
@@ -656,6 +669,7 @@ a.article-card:hover .card-image-container::after {
     margin-top: 0;
     margin-bottom: 1.5rem;
     line-height: 1.3;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 /* 6. 卡片内的元信息 */
@@ -697,26 +711,28 @@ a.article-card:hover .card-image-container::after {
 }
 
 .article-content h2 {
-    position: relative; /* 1. 关键：让 <h2> 成为定位容器 */
+    position: relative;
     font-size: 2rem;
     margin-top: 3em;
     margin-bottom: 1em;
-    padding-bottom: 0.5em; /* 2. 稍微增加一点标题和下划线之间的距离 */
-    border-bottom: 1px solid var(--border-color); /* 3. 保留原有的浅色下划线作为背景 */
-}
-/* 4. 使用 ::after 伪元素创建渐变下划线 */
-.article-content h2::after {
-    content: ''; /* 伪元素必须有这个才能显示 */
-    position: absolute;
-    left: 0;
-    bottom: 15px; /* 5. 关键：让渐变线刚好覆盖在 border-bottom 上 */
-    width: 50px; /* 6. 定义下划线的宽度，可以根据喜好调整 */
-    height: 5px; /* 下划线的高度 */
-    /* 应用你网站已有的渐变色变量 */
-    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
-    border-radius: 2px; /* 7. 让下划线两端更圆润好看 */
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid var(--border-color);
 }
 
+.article-content h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 15px;
+    width: 50px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 2px;
+}
+.article-content h2,
+.article-content h3 {
+    font-family: 'Poppins', sans-serif !important;
+}
 .article-content h3 {
     font-size: 1.6rem;
     margin-top: 2.5em;
@@ -760,7 +776,14 @@ a.article-card:hover .card-image-container::after {
     max-width: 1400px;
     padding: 0 2rem;
     box-sizing: border-box;
-    /* ✨ 新增：让它自己水平居中 ✨ */
     margin-left: auto;
     margin-right: auto;
+}
+body:not(.dark-theme) a.article-card h3 {
+    color: #2c3e50; /* 一个非常好看的深板岩灰色 */
+}
+
+/* 同样为推荐卡片的标题应用此颜色 */
+body:not(.dark-theme) .editor-selection-content h3 {
+    color: #2c3e50;
 }

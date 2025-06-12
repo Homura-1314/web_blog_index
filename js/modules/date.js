@@ -1,9 +1,5 @@
-// js/modules/date.js (最终修复版)
-
 import { showCustomAlert } from "./ui.js";
 import { articles } from "./data_basa.js";
-
-// --- HTML模板创建函数 (保持不变，链接已修正) ---
 function createHeroArticleHTML(key, article) {
   return `
         <div class="hero-card-bg" style="background-image: url('${article.image}');"></div>
@@ -50,7 +46,6 @@ function createArticleCardHTML(key, article) {
         </a>
     `;
 }
-// --- 首页数据填充函数 (保持不变) ---
 export function post_data() {
   const articleKeys = Object.keys(articles);
   if (articleKeys.length === 0) return;
@@ -99,7 +94,6 @@ export function post_data() {
   }
 }
 
-// --- ✨ 重构函数 1：专门处理认证和页面保护 ---
 export function handleAuth() {
   const loggedIn = localStorage.getItem("isLoggedIn") === "true";
   const navAuthLink = document.getElementById("nav-auth-link");
@@ -127,7 +121,7 @@ export function handleAuth() {
     showCustomAlert("请先登录以访问该页面！", "访问受限").then(() => {
       window.location.href = "login.html";
     });
-    return true; // 返回 true，表示需要中断后续脚本
+    return true;
   }
 
   const loginForm = document.getElementById("loginForm");
@@ -145,7 +139,6 @@ export function handleAuth() {
   return false; // 返回 false，表示一切正常
 }
 
-// --- ✨ 重构函数 2：专门渲染文章详情页 (增加幂等性检查) ---
 export function renderArticlePage() {
   const banner = document.querySelector(".article-hero-banner");
   const articleWrapper = document.querySelector(".article-wrapper");

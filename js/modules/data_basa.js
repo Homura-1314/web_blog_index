@@ -72,65 +72,6 @@ const articles = {
         <p>Docker的强大远不止于此，它彻底改变了现代软件的开发和部署流程。对于我们后端开发者而言，掌握Docker意味着能更高效、更可靠地交付我们的应用。这只是一个开始，接下来还有Docker Compose、Kubernetes等更广阔的世界等待我们探索。</p>
       `,
   },
-  // Docker文章本身保持不变，作为对照组
-  "docker-intro": {
-    title: "Docker入门：告别“我电脑上明明是好的”",
-    excerpt:
-      "作为开发者，你一定遇到过“环境不一致”的噩梦。Docker正是解决这一问题的银弹。本文将带你初探Docker的世界。",
-    image: "images/bg6.jpg",
-    tags: "#Docker #DevOps #后端",
-    category: "服务部署",
-    author: "三叶hikari",
-    date: "2025-6-20",
-    content: `
-        <h2>前言：那个熟悉的“魔咒”</h2>
-        <p>“在我电脑上明明是好的啊！” —— 这句话，恐怕是每个开发者都说过或听过的“魔咒”。项目的运行依赖于特定的操作系统、特定版本的JDK、特定配置的Tomcat... 任何一个环节的微小差异，都可能导致程序崩溃。</p>
-        <p>作为一名主攻Java的开发者，我深知环境配置的繁琐与痛苦。而Docker，就是将我们从这场噩梦中解救出来的英雄。</p>
-        <h2>Docker是什么？一个码头的比喻</h2>
-        <p>想象一下，我们开发的Java应用是一批需要远洋运输的“货物”。</p>
-        <ul>
-            <li><strong>没有Docker的时代：</strong> 我们需要自己找船，担心船上的冷藏设备（JDK版本）对不对，担心船舱的尺寸（操作系统）合不合适。换一艘船，可能所有东西都得重新打包。</li>
-            <li><strong>有了Docker的时代：</strong> 我们把“货物”（我们的应用）连同它需要的一切环境（JDK、Tomcat、依赖库），全部打包进一个标准化的**集装箱（Container）**。这个集装箱有统一的接口，可以在任何支持这种标准的码头（安装了Docker的机器）上被吊起和运行，完全不用关心码头本身的设施差异。</li>
-        </ul>
-        <p>这个“集装箱”，就是Docker的核心——容器。它提供了一个隔离的、标准化的运行环境，确保了从开发、测试到生产的每一处环境都完全一致。</p>
-        <h2>三大核心概念</h2>
-        <p>要理解Docker，必须掌握这三个概念：</p>
-        <ol>
-          <li><strong>镜像 (Image):</strong>  可以理解为创建集装箱的“图纸”或“模板”。它是一个只读文件，包含了运行应用所需的所有指令、代码和依赖。我们通常基于一个基础镜像（如一个包含JDK的镜像），然后一层层添加自己的应用。</li>
-          <li><strong>容器 (Container):</strong> 镜像的运行实例。就是我们用“图纸”造出来的那个能跑的“集装箱”。容器之间互相隔离，有自己的文件系统、进程和网络空间。我们可以创建、启动、停止、删除容器。</li>
-          <li><strong>仓库 (Repository):</strong> 存放镜像的“仓库”。最著名的就是官方的Docker Hub，我们可以从上面拉取（pull）别人做好的镜像，也可以把自己做好的镜像推送（push）上去。</li>
-        </ol>
-        <h2>一个简单的Java应用Docker化实例</h2>
-        <p>假设我们有一个简单的Spring Boot项目，打成了一个<code>app.jar</code>包。我们可以通过一个名为<code>Dockerfile</code>的文件来定义它的镜像“图纸”：</p>
-        <pre><code class="language-dockerfile">
-# 步骤1: 选择一个包含Java 17的基础镜像
-FROM openjdk:17-jdk-slim
-
-# 步骤2: 设置工作目录
-WORKDIR /app
-
-# 步骤3: 将我们本地的jar包复制到镜像的/app目录下
-COPY target/app.jar app.jar
-
-# 步骤4: 声明容器对外暴露的端口
-EXPOSE 8080
-
-# 步骤5: 定义容器启动时执行的命令
-ENTRYPOINT ["java", "-jar", "app.jar"]
-        </code></pre>
-        <p>有了这个<code>Dockerfile</code>，我们只需要在项目根目录下执行两个简单的命令：</p>
-        <pre><code class="language-shell">
-# 1. 构建镜像，并给它起个名字叫 my-java-app
-docker build -t my-java-app .
-
-# 2. 运行镜像，生成一个容器，并将容器的8080端口映射到我们主机的8080端口
-docker run -p 8080:8080 my-java-app
-        </code></pre>
-        <p>就这样，我们的Java应用就在一个完全隔离的环境中运行起来了！无需在主机上安装Java，是不是非常神奇？</p>
-        <h2>结语</h2>
-        <p>Docker的强大远不止于此，它彻底改变了现代软件的开发和部署流程。对于我们后端开发者而言，掌握Docker意味着能更高效、更可靠地交付我们的应用。这只是一个开始，接下来还有Docker Compose、Kubernetes等更广阔的世界等待我们探索。</p>
-      `,
-  },
   "git-basics": {
     title: "Git入门：不止是Ctrl+S，更是团队协作的基石",
     excerpt:
