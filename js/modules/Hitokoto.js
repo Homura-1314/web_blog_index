@@ -18,8 +18,8 @@ export function inithitok_to() {
     const hitokotoContainer = document.querySelector('.hitokoto-container');
     if (!hitokotoContainer) return;
 
-    const textEl = document.getElementById('hitokoto-text');
-    const fromEl = document.getElementById('hitokoto-from');
+    const textEl = document.getElementById('hitokoto');
+    const fromEl = document.getElementById("hitokoto_from");
     const refreshBtn = document.getElementById('refresh-hitokoto');
     let hitokotoInterval;
     const fetchHitokoto = async () => {

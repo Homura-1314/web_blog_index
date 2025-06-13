@@ -20,10 +20,10 @@ nav .user-actions a.btn { background: linear-gradient(45deg, var(--primary-color
 
 /* --- 背景动画组件 --- */
 #slideshow-container {
-    position: fixed;
+    position: absolute;
     width: 100%; height: 100%;
     top: 0; left: 0;
-    z-index: -2;
+    z-index: 0;
     background-color: #12121c; /* 防止闪烁的深色底色 */
     overflow: hidden; /* 隐藏任何可能溢出的部分 */
 }
@@ -33,7 +33,7 @@ nav .user-actions a.btn { background: linear-gradient(45deg, var(--primary-color
     top: 0; left: 0;
     width: 100%; height: 100%;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     opacity: 0;
     z-index: 1;
     transition: opacity 1.5s ease-in-out;
@@ -79,14 +79,6 @@ nav .user-actions a.btn { background: linear-gradient(45deg, var(--primary-color
 .skill-badge { color: var(--text-color-light); background-color: rgba(0, 0, 0, .2); padding: .5rem 1rem; border-radius: 20px; font-size: .9rem; font-weight: 600; display: flex; align-items: center; gap: .5rem; transition: transform .3s; }
 .skill-badge:hover { transform: translateY(-3px); }
 
-/* --- 一言组件 --- */
-.hitokoto-container { margin-top: 2rem; padding: 1rem; background: rgba(0, 0, 0, .1); border-radius: 8px; font-style: italic; cursor: pointer; }
-#hitokoto-text { transition: opacity .5s; }
-.hitokoto-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; font-size: .9em; }
-#hitokoto-from { text-align: right; margin-top: .5rem; font-size: .9em; }
-.hitokoto-actions { display: flex; align-items: center; gap: 1.2rem; }
-#refresh-hitokoto { cursor: pointer; transition: transform .5s, color .3s; }
-#refresh-hitokoto:hover { transform: rotate(360deg); }
 .copy-container { display: inline-flex; align-items: center; justify-content: center; position: relative; width: 1.2em; height: 1.2em; cursor: pointer; transition: transform .3s; }
 .copy-container:hover { transform: scale(1.2); }
 .copy-container .icon-copy, .copy-container .icon-check { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: opacity .3s, transform .3s; }
@@ -172,7 +164,8 @@ pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
     border-radius: 6px;
     font-size: 0.8rem;
     font-weight: 700;
-    color: #fff;
+    background-color: var(--primary-color); 
+    color: #fff !important;
 }
 /* 为不同分类设置不同颜色 */
 .primary-tag[data-category="博客"],
@@ -185,6 +178,30 @@ pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
 }
 .primary-tag[data-category="基础"] {
     background-color: #0ead69;
+}
+.primary-tag[data-category="数据库"] {
+    background-color: #17a2b8; /* 信息青色 */
+}
+.primary-tag[data-category="框架"] {
+    background-color: #28a745; /* 成功绿色 */
+}
+.primary-tag[data-category="服务部署"] {
+    background-color: #fd7e14; /* 活力橙色 */
+}
+.primary-tag[data-category="核心"] {
+    background-color: #dc3545; /* 危险红色 */
+}
+.primary-tag[data-category="基础"] {
+    background-color: #6c757d; /* 中性灰色 */
+}
+.primary-tag[data-category="微服务"] {
+    background-color: #6f42c1; /* 优雅紫色 */
+}
+.primary-tag[data-category="工具"] {
+    background-color: #343a40; /* 深邃黑色 */
+}
+.primary-tag[data-category="博客"] {
+    background-color: #e83e8c; /* 温柔粉色 */
 }
 /* 2. 次要技术标签 */
 .secondary-tags {
@@ -329,7 +346,7 @@ a.article-card:hover .card-image-container img {
 
 .tag-count {
     font-size: 0.8em;
-    color: #555; /* 让数字更不显眼 */
+    color: #555;
     margin-left: 0.8em;
     font-weight: 500;
     background-color: rgba(255, 255, 255, 0.50); /* 给个淡淡的背景 */
@@ -356,7 +373,7 @@ a.article-card:hover .card-image-container img {
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 3rem;
-    color: #fff;
+    color: #b1d5e4;
     border: 1px solid var(--border-color);
     box-shadow: var(--card-shadow);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -704,6 +721,7 @@ a.article-card:hover .card-image-container::after {
 .article-content {
     line-height: 1.8;
     font-size: 1.05rem;
+    color: var(--text-color);
 }
 
 .article-content p {
@@ -763,8 +781,8 @@ a.article-card:hover .card-image-container::after {
     overflow: hidden;
 }
 .article-content pre[class*="language-"]::after {
-    content: ''; /* 伪元素必须有这个才能显示 */
-    position: absolute; /* 相对于 <pre> 元素进行定位 */
+    content: '';
+    position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -778,12 +796,192 @@ a.article-card:hover .card-image-container::after {
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 4rem;
 }
 body:not(.dark-theme) a.article-card h3 {
-    color: #2c3e50; /* 一个非常好看的深板岩灰色 */
+    color: #2c3e50;
 }
 
 /* 同样为推荐卡片的标题应用此颜色 */
 body:not(.dark-theme) .editor-selection-content h3 {
     color: #2c3e50;
+}
+/* 1. 横幅主容器 */
+.hero-banner {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* 2. 添加一个半透明的黑色遮罩，让文字更清晰可读 */
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+/* 3. 横幅内的内容（文字）容器 */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 1rem;
+}
+
+/* 4. 主标题样式 */
+.hero-content .hero-title {
+    font-family: 'ZCOOL KuaiLe', sans-serif;
+    font-size: 4.5rem;
+    margin: 0;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* 5. 副标题样式 */
+.hero-content .hero-subtitle {
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    max-width: 700px;
+    letter-spacing: 0.05em;
+    color: #fff;
+    opacity:0.91;
+    text-shadow: 
+        0px 0px 5px rgba(0, 0, 0, 0.9),
+        0px 0px 15px rgba(0, 0, 0, 0.7);
+}
+
+/* 1. 波浪的总容器，现在只负责定位 */
+.hero-waves-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 3;/
+}
+
+/* 2. SVG元素本身的样式 */
+.waves {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.waves path {
+    fill: var(--body-bg-color); 
+}
+
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+    fill: rgb(var(--wave-overlay-color-rgb));
+    fill-opacity: 0.1;
+}
+
+/* 中间的波浪 */
+.parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+    fill: rgb(var(--wave-overlay-color-rgb));
+    fill-opacity: 0.2;
+}
+
+/* 靠后的波浪 */
+.parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+    fill: rgb(var(--wave-overlay-color-rgb));
+    fill-opacity: 0.3;
+}
+
+.parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+    fill: var(--body-bg-color);
+    fill-opacity: 0.5;
+}
+
+/* 5. 定义动画关键帧 */
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px,0,0);
+    }
+    100% { 
+        transform: translate3d(85px,0,0);
+    }
+}
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 80px; /* 箭头距离屏幕底部的位置 */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 2rem; /* 箭头大小 */
+    z-index: 3;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.scroll-down-indicator:hover {
+    opacity: 1;
+}
+
+.scroll-down-indicator i {
+    /* 应用一个“呼吸”式的上下浮动动画 */
+    animation: bounce 2s infinite ease-in-out;
+}
+
+/* 定义“呼吸”动画的关键帧 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+    60% {
+        transform: translateY(-8px);
+    }
+}
+.hitokoto-container {
+    margin-top: 2.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+/* “一言”句子本身的样式 */
+#hitokoto {
+    display: block; /* 让它独占一行 */
+    font-size: 1.5rem; /* 设置一个醒目的大小 */
+    font-weight: 500;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+    line-height: 1.5;
+    margin-top : 1.25rem
+}
+
+/* “一言”来源的样式 */
+#hitokoto_from {
+    display: block;
+    font-size: 1rem;
+    margin-top: 0.8rem;
+    opacity: 0.8; /* 让它比主句更柔和 */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 }

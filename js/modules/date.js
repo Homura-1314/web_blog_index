@@ -12,7 +12,7 @@ function createHeroArticleHTML(key, article) {
                 <span>${article.author} · ${article.date}</span>
             </div>
         </div>
-        <a href="article.html?topic=${key}" class="full-card-link" aria-label="阅读文章：${article.title}"></a>
+        <a href="about.html?topic=${key}" class="full-card-link" aria-label="阅读文章：${article.title}"></a>
     `;
 }
 
@@ -24,17 +24,21 @@ function createArticleCardHTML(key, article) {
   const author = article.author || "匿名作者";
   const date = article.date || "未知日期";
   const category = (article.category || "未分类").replace("#", "").trim();
-  const tags = article.tags || "";
+  const allTags = (article.tags || "").split(" ").filter(Boolean);
+  const filteredTags = allTags.filter((tag) => {
+    const cleanTag = tag.replace("#", "").trim();
+    return cleanTag.toLowerCase() !== category.toLowerCase();
+  });
+  const displayTags = filteredTags.join(" ");
   const html_url =
     key === "project-intro" ? "about.html" : `article.html?topic=${key}`;
-
   return `
         <a href="${html_url}" class="article-card" data-category="${category}">
             <div class="card-image-container"><img src="${imageUrl}" alt="${title}"></div>
             <div class="card-content">
                 <div class="card-tags-container">
                     <span class="primary-tag" data-category="${category}">${category}</span>
-                    <span class="secondary-tags">${tags}</span>
+                    <span class="secondary-tags">${displayTags}</span>
                 </div>
                 <h3>${title}</h3>
                 <p class="card-excerpt">${excerpt}</p>

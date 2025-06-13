@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
       post_data();
       inithitok_to();
       initArticleFilter();
+      init_img_rotion();
       break;
     case "page-article":
       renderArticlePage(); // 只在这里调用文章渲染
@@ -31,9 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
       break;
     case "page-login":
       init_img_rotion();
+      Effect();
       break;
     case "page-register":
       init_img_rotion();
+      Effect();
       initRegisterFormValidation();
       break;
   }

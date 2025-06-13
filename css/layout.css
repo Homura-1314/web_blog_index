@@ -37,7 +37,7 @@ nav {
 
 /* --- 内容页面主布局 --- */
 main {
-    padding-top: 80px; /* header的高度 */
+    padding-top: 0; /* header的高度 */
     box-sizing: border-box;
     flex-grow: 1; /* 用于粘性页脚 */
 }

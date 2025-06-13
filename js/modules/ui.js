@@ -3,7 +3,6 @@ export function theme_init(){
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
     const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
-
     // 1. 定义切换函数
     function setTheme(theme) {
         if (theme === 'dark') {
@@ -22,7 +21,6 @@ export function theme_init(){
             localStorage.setItem('theme', 'light');
         }
     }
-
     // 2. 按钮点击事件
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
@@ -33,7 +31,6 @@ export function theme_init(){
             }
         });
     }
-
     // 3. 初始化主题：检查localStorage中保存的用户偏好
     const savedTheme = localStorage.getItem('theme') || 'light'; // 默认亮色主题
     setTheme(savedTheme);
@@ -155,7 +152,7 @@ export function music_player(){
             setInterval(savePlayerState, 2500);
         }catch (error){
             console.error('获得歌曲失败',error);
-            textEl.style.autoplay = 1;
+            // textEl.style.autoplay = 1;
             if (error.name == 'AbortError'){
                 textEl.textContent = '获得歌曲超时了, 稍后再尝试喵>_<'
             }else{

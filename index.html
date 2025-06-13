@@ -10,21 +10,9 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-    <link rel="icon" href="images\logo.png">
+    <link rel="icon" href="images/logo.png">
 </head>
 <body id="page-index">
-    <div class="wave-background">
-        <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" class="wave">
-            <defs>
-                <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color: #3A61E2; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #D439E8; stop-opacity: 1" />
-                </linearGradient>
-            </defs>
-            <path fill="url(#waveGradient)" fill-opacity="0.8" d="M0,160L48,176C96,192,192,224,288,224C384,224,480,192,576,181.3C672,171,768,181,864,202.7C960,224,1056,256,1152,245.3C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-        </svg>
-    </div>
-<div class="wave-background-bottom"></div>
     <div id="aplayer"></div>
     <header>
     <nav>
@@ -50,6 +38,34 @@
     </header>
 
     <main>
+        <section class="hero-banner">
+            <div id="slideshow-container"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">三叶✨次元</h1>
+                <p class="hero-subtitle">欢迎来到我的知识空间，在这里记录学习与思考的点滴~</p>
+                <div class="hitokoto-container">
+                    <span id="hitokoto">「正在加载一言...」</span>
+                    <span id="hitokoto_from"></span>
+                </div>
+            </div>
+            <a href="#hero-article-card" class="scroll-down-indicator" aria-label="滚动到主要内容">
+                <i class="fas fa-chevron-down"></i>   
+            </a>
+            <div class="hero-waves-container">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" />
+                    </g>
+                </svg>      
+            </div>
+        </section>
     <div class="content-wrapper">
             <div id="hero-article-card"></div>
         <!-- 2. 编辑推荐和文章列表区域 -->
