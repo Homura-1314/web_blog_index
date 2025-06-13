@@ -88,31 +88,54 @@ nav .user-actions a.btn { background: linear-gradient(45deg, var(--primary-color
 .copy-container.copied .icon-check { opacity: 1; transform: translate(-50%, -50%) scale(1); color: #4caf50; }
 .card-meta .tag { padding: .2rem .6rem; border-radius: 10px; background-color: rgba(0, 0, 0, .2); }
 pre[class*=language-] { border-radius: 8px; padding: 1.5em; font-size: .9em; }
-
 /* --- 页脚组件 --- */
 .social-links { margin-bottom: 1rem; }
 .social-links a { color: var(--text-color-light); font-size: 1.5rem; margin: 0 1rem; transition: color .3s; }
-
 /* --- APlayer播放器 --- */
 #aplayer { position: fixed !important; bottom: 0; left: 0; width: 450px; z-index: 999; }
-/* 2. 所有歌词的通用样式 (非当前播放行) */
 .aplayer .aplayer-lrc p {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 500 !important;
-    font-size: 19px !important;
+    font-size: 20px !important;
     letter-spacing: 1.7px;
     text-shadow: none !important;
-    transition: color 0.3s ease, opacity 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     
-    /* ✨ 设置非激活歌词的颜色，使用次要文字颜色，更柔和 */
-    color: var(--text-color-secondary) !important;
+    /* 非激活歌词使用柔和的渐变 */
+    background: linear-gradient(135deg, var(--text-color-secondary), rgba(var(--text-color-secondary-rgb), 0.6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.7;
 }
-/* 3. ✨ 当前高亮歌词的专属样式 ✨ */
 .aplayer .aplayer-lrc .aplayer-lrc-current {
-    /* 使用你网站标志性的主色调，使其脱颖而出 */
-    color: var(--primary-color) !important;
-    font-weight: 700 !important; /* 使用更粗的字重，进一步强调 */
+    /* 彩虹渐变高亮 */
+    background: linear-gradient(45deg, #ff6b9d, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, var(--primary-color)) !important;
+    background-size: 300% 300% !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: lyric-rainbow 3s ease infinite !important;
+    font-weight: 700 !important;
+    transform: scale(1.05) !important;
+    text-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.3) !important;
 }
+@keyframes lyric-rainbow {
+    0%, 100% { background-position: 0% 50%; }
+    25% { background-position: 100% 0%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 0% 100%; }
+}
+  /* 歌词容器增加内边距和行高 */
+  .aplayer .aplayer-lrc {
+    padding: 15px 0 !important; /* 增加垂直空间 */
+    max-height: 120px !important; /* 限制高度避免溢出 */
+  }
+  .aplayer .aplayer-lrc .aplayer-lrc-current {
+    transform-origin: center !important; /* 确保从中心缩放 */
+    display: inline-block; /* 避免挤压相邻行 */
+    padding: 5px 0 !important; /* 放大后预留空间 */
+  }
 .article-grid {
     display: grid;
     /* 调整最小宽度以适应更宽的布局 */
