@@ -15,10 +15,10 @@ async function preloadImages(urls, callback) {
   export function init_img_rotion() {
     const slideshowContainer = document.getElementById("slideshow-container");
   if (slideshowContainer) {
-    const totalImages = 12; // 图片总数
+    const totalImages = 27; // 图片总数
     const displayDuration = 15000; // 每张图片显示时长
     let images = [];
-    for (let i = 2; i <= totalImages; i++) {
+    for (let i = 1; i <= totalImages; i++) {
       images.push(`images/bg${i}.jpg`);
     }
     const shuffle = () => {
