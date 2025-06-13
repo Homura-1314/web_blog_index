@@ -845,7 +845,7 @@ body:not(.dark-theme) .editor-selection-content h3 {
     left: 0;
     width: 100%;
     height: 100px;
-    z-index: 3;/
+    z-index: 3;
 }
 
 /* 2. SVG元素本身的样式 */
