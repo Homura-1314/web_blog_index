@@ -1,0 +1,35 @@
+/* Poppins Regular (400) */
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./webfonts/poppins-regular.woff2) format('woff2');
+  }
+  
+  /* Poppins Medium (500) */
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(./webfonts/poppins-500.woff2) format('woff2');
+  }
+  
+  /* Poppins Bold (700) */
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(./webfonts/poppins-700.woff2) format('woff2');
+  }
+  
+  /* ZCOOL KuaiLe Regular (400) */
+  @font-face {
+    font-family: 'ZCOOL KuaiLe';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./webfonts/zcool-kuaile-regular.woff2) format('woff2');
+  }

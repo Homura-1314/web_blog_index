@@ -24,21 +24,26 @@ function createArticleCardHTML(key, article) {
   const author = article.author || "匿名作者";
   const date = article.date || "未知日期";
   const category = (article.category || "未分类").replace("#", "").trim();
-  const allTags = (article.tags || "").split(" ").filter(Boolean);
-  const filteredTags = allTags.filter((tag) => {
-    const cleanTag = tag.replace("#", "").trim();
-    return cleanTag.toLowerCase() !== category.toLowerCase();
-  });
-  const displayTags = filteredTags.join(" ");
+  const tags = (article.tags || "")
+    .split(" ")
+    .filter(
+      (tag) =>
+        tag.replace("#", "").trim().toLowerCase() !== category.toLowerCase()
+    )
+    .join(" ");
+
   const html_url =
     key === "project-intro" ? "about.html" : `article.html?topic=${key}`;
+
   return `
         <a href="${html_url}" class="article-card" data-category="${category}">
-            <div class="card-image-container"><img src="${imageUrl}" alt="${title}"></div>
+            <div class="card-image-container">
+                <img src="images/placeholder.gif" data-src="${imageUrl}" alt="${title}" class="lazy-load">
+            </div>
             <div class="card-content">
                 <div class="card-tags-container">
                     <span class="primary-tag" data-category="${category}">${category}</span>
-                    <span class="secondary-tags">${displayTags}</span>
+                    <span class="secondary-tags">${tags}</span>
                 </div>
                 <h3>${title}</h3>
                 <p class="card-excerpt">${excerpt}</p>
@@ -146,13 +151,14 @@ export function handleAuth() {
 export function renderArticlePage() {
   const banner = document.querySelector(".article-hero-banner");
   const articleWrapper = document.querySelector(".article-wrapper");
-  if (
-    !banner ||
-    !articleWrapper ||
-    articleWrapper.querySelector(".article-body-card")
-  ) {
+
+  // 只检查容器是否存在
+  if (!banner || !articleWrapper) {
     return;
   }
+
+  // ✨ 关键修复：在渲染新内容之前，总是先清空旧的内容 ✨
+  articleWrapper.innerHTML = "";
 
   const params = new URLSearchParams(window.location.search);
   const topic = params.get("topic");
@@ -175,7 +181,14 @@ export function renderArticlePage() {
                 <div class="article-content">${article.content}</div>
             </div>
         `;
-    if (typeof Prism !== "undefined") Prism.highlightAll();
+    // 确保代码高亮在内容插入后执行
+    if (typeof Prism !== "undefined") {
+      // Prism.highlightAll() 可能在SPA导航中不可靠，我们需要更精确的方式
+      const codeElements = articleWrapper.querySelectorAll("pre code");
+      codeElements.forEach((el) => {
+        Prism.highlightElement(el);
+      });
+    }
   } else {
     document.title = "文章未找到 | 三叶次元";
     articleWrapper.innerHTML = `
@@ -188,4 +201,18 @@ export function renderArticlePage() {
             </div>
         `;
   }
+}
+// ✨ 全新：填充文章侧边栏的函数
+export function populateArticleSidebar() {
+  const sidebarList = document.getElementById("sidebar-article-list");
+  if (!sidebarList) return;
+
+  let html = "";
+  for (const key in articles) {
+    if (key === "project-intro") continue;
+    const article = articles[key];
+    // ✨ 关键：为 a 标签添加 data-topic="${key}" 属性
+    html += `<a href="article.html?topic=${key}" data-topic="${key}">${article.title}</a>`;
+  }
+  sidebarList.innerHTML = html;
 }

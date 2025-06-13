@@ -60,3 +60,19 @@ footer {
     color: var(--text-color-secondary);
     border-top: 1px solid var(--border-color);
 }
+.article-page-container {
+    display: flex; /* 启动 Flexbox 布局 */
+    padding-top: 80px; /* 为顶部的固定导航栏留出空间 */
+}
+
+.article-sidebar {
+    /* 侧边栏宽度固定 */
+    flex-shrink: 0; 
+    width: 280px;
+}
+
+.article-main-content {
+    /* 主内容区自动占据剩余空间 */
+    flex-grow: 1;
+    width: calc(100% - 280px); /* 确保宽度计算正确 */
+}

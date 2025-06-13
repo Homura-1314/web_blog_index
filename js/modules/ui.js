@@ -38,7 +38,6 @@ export function theme_init(){
 
 export function Effect(){
     const cards = document.querySelectorAll('.tilt-effect');
-
     cards.forEach(card => {
         let ticking = false; // 请求动画帧的节流阀
         let currentX = 0;
@@ -68,7 +67,7 @@ export function Effect(){
     });
 
     // 4. 打字机效果
-    const typewriterElement = document.getElementById('typewriter');
+    const typewriterElement = document.getElementById("hero-subtitle");
     if (typewriterElement) {
         const text = "欢迎来到我的知识空间~";
         let index = 0;
@@ -83,85 +82,100 @@ export function Effect(){
     }
 }
 
-export function music_player(){
-    const aplayerContainer = document.getElementById('aplayer');
-    if (aplayerContainer && typeof APlayer !== 'undefined') {
+export function music_player() {
+  const aplayerContainer = document.getElementById("aplayer");
+  if (!aplayerContainer || typeof APlayer === "undefined") {
+    return;
+  }
 
-    aplayerContainer.innerHTML = '<p style="text-align:center; color: #fff; padding: 20px;">正在从次元云加载音乐...</p>';
-    const metingApiUrl = 'https://api.i-meto.com/meting/api?server=netease&type=playlist&id=7747893098';
-    const init_music = async () =>{
-        try{
-            const response = await fetchWithTimeout(metingApiUrl, { timeout:5000
-        });
-        if (!response.ok){
-            throw new Error(`HTTP error status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (!data || data.length === 0){
-            throw new Error("API返回的播放列表为空");
-        }
-        aplayerContainer.innerHTML = '';
+  aplayerContainer.innerHTML =
+    '<p style="text-align:center; color: var(--text-color-secondary); padding: 20px;">正在从次元云加载音乐...</p>';
 
-            const ap = new APlayer({
-                container: aplayerContainer,
-                fixed: true,
-                lrcType: 3,
-                audio: data,
-                autoplay: false
-            });
-            // 标记是否已经从sessionStorage恢复过状态
-            let hasRestored = false; 
-            // 1. 监听'canplay'事件，这是恢复进度的最佳时机
-            ap.on('canplay', () => {
-                // 如果还没有恢复过状态，就执行恢复操作
-                if (!hasRestored) {
-                    const lastState = JSON.parse(sessionStorage.getItem('aplayerState'));
-                    if (lastState) {
-                        // 检查歌曲索引是否匹配，防止恢复到错误的歌曲上
-                        if (ap.list.index === lastState.index) {
-                            ap.seek(lastState.time);
-                            if (lastState.isPlaying) {
-                                ap.play();
-                            }
-                        }
-                    }
-                    hasRestored = true;
-                }
-            });
-            ap.on('listswitch', () => {
-                hasRestored = false;
-            });
+  const metingApiUrl =
+    "https://api.i-meto.com/meting/api?server=netease&type=playlist&id=7747893098";
 
-            // 3. 保存播放状态的逻辑
-            const savePlayerState = () => {
-                if(ap.audio.HAVE_CURRENT_DATA) {
-                    const state = {
-                        index: ap.list.index,
-                        time: ap.audio.currentTime,
-                        isPlaying: !ap.audio.paused
-                    };
-                    sessionStorage.setItem('aplayerState', JSON.stringify(state));
-                }
-            };
-            
-            // 在关键事件上保存状态
-            ap.on('play', savePlayerState);
-            ap.on('pause', savePlayerState);
-            window.addEventListener('beforeunload', savePlayerState);
-            // 定时器可以更频繁地保存进度
-            setInterval(savePlayerState, 2500);
-        }catch (error){
-            console.error('获得歌曲失败',error);
-            // textEl.style.autoplay = 1;
-            if (error.name == 'AbortError'){
-                textEl.textContent = '获得歌曲超时了, 稍后再尝试喵>_<'
-            }else{
-                textEl.textContent = '歌曲加载失败, 稍后再尝试喵T_T'
-            }
+  const init_music = async () => {
+    try {
+      const response = await fetchWithTimeout(metingApiUrl, { timeout: 8000 });
+      if (!response.ok)
+        throw new Error(`HTTP error status: ${response.status}`);
+
+      const data = await response.json();
+      if (!data || data.length === 0) throw new Error("API返回的播放列表为空");
+
+      aplayerContainer.innerHTML = "";
+
+      const ap = new APlayer({
+        container: aplayerContainer,
+        fixed: true,
+        lrcType: 3,
+        audio: data,
+        autoplay: false,
+      });
+
+      // --- ✨ 这是本次修复的核心：全新的、基于事件链的状态恢复逻辑 ✨ ---
+
+      const lastState = JSON.parse(sessionStorage.getItem("aplayerState"));
+
+      if (
+        lastState &&
+        typeof lastState.index === "number" &&
+        lastState.index < data.length
+      ) {
+        // 步骤1: 切换到正确的歌曲。这是我们唯一需要立即执行的操作。
+        ap.list.switch(lastState.index);
+
+        // 步骤2: 定义一个一次性的'loadeddata'事件监听器。
+        // 当新歌曲的数据加载完毕后，这个监听器会被触发。
+        const onLoadedData = () => {
+          // 步骤3: 在数据加载后，我们现在可以安全地设置播放时间。
+          ap.seek(lastState.time);
+
+          // 步骤4: 移除这个一次性的监听器，防止它再次触发。
+          ap.off("loadeddata", onLoadedData);
+        };
+
+        // 步骤5: 定义一个一次性的'seeked'事件监听器。
+        // 当ap.seek()操作完成，播放头成功跳转后，这个监听器会被触发。
+        const onSeeked = () => {
+          // 步骤6: 在跳转完成后，我们现在可以安全地恢复播放状态。
+          if (lastState.isPlaying) {
+            ap.play();
+          }
+
+          // 步骤7: 同样，移除这个一次性的监听器。
+          ap.off("seeked", onSeeked);
+        };
+
+        // 步骤8: 绑定这两个一次性的监听器。
+        ap.on("loadeddata", onLoadedData);
+        ap.on("seeked", onSeeked);
+      }
+
+      // 保存状态的逻辑保持不变
+      const savePlayerState = () => {
+        if (ap.audio && ap.audio.HAVE_CURRENT_DATA) {
+          const state = {
+            index: ap.list.index,
+            time: ap.audio.currentTime,
+            isPlaying: !ap.audio.paused,
+            url: ap.audio.src,
+          };
+          sessionStorage.setItem("aplayerState", JSON.stringify(state));
         }
+      };
+
+      ap.on("play", savePlayerState);
+      ap.on("pause", savePlayerState);
+      ap.on("timeupdate", savePlayerState);
+      window.addEventListener("beforeunload", savePlayerState);
+    } catch (error) {
+      console.error("获取音乐播放列表失败:", error);
+      aplayerContainer.innerHTML = `<p style="text-align:center; color: #E74C3C; padding: 20px;">歌曲加载失败 >_<</p>`;
     }
-    init_music();
-}
+  };
+
+  init_music();
 }
 export function initArticleFilter() {
     const filterBar = document.getElementById('filter-bar');

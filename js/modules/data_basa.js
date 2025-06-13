@@ -14,7 +14,7 @@ const articles = {
     title: "Docker入门：告别“我电脑上明明是好的”",
     excerpt:
       "作为开发者，你一定遇到过“环境不一致”的噩梦。Docker正是解决这一问题的银弹。本文将带你初探Docker的世界。",
-    image: "images/bg6.jpg",
+    image: "images/bg1.jpg",
     tags: "#Docker #DevOps #后端",
     category: "服务部署",
     author: "三叶hikari",
@@ -76,7 +76,7 @@ const articles = {
     title: "Git入门：不止是Ctrl+S，更是团队协作的基石",
     excerpt:
       "从个人备份到团队协作，Git是现代开发的必备技能。本文将带你了解Git的核心概念，并掌握最常用的命令，让你轻松上手版本控制。",
-    image: "images/bg6.jpg",
+    image: "images/bg10.jpg",
     tags: "#Git #版本控制 #DevOps",
     category: "基础",
     author: "三叶hikari",
@@ -144,7 +144,7 @@ git merge feature-login
     title: "RESTful API设计指南：构建优雅且可预测的Web服务",
     excerpt:
       "作为连接前后端的桥梁，API的设计至关重要。本文将介绍RESTful风格的核心原则，帮助你设计出清晰、易于理解和维护的API。",
-    image: "images/bg6.jpg",
+    image: "images/bg11.jpg",
     tags: "#API #REST #后端 #架构",
     category: "微服务",
     author: "三叶hikari",
@@ -205,7 +205,7 @@ git merge feature-login
     title: "告别浮动：CSS Flexbox布局完全指南",
     excerpt:
       "还在为清除浮动和垂直居中而头疼吗？Flexbox（弹性盒子布局）是现代CSS布局的解决方案，让你用更少、更直观的代码实现复杂的布局。",
-    image: "images/bg6.jpg",
+    image: "images/bg13.jpg",
     tags: "#CSS #Flexbox #前端",
     category: "核心",
     author: "三叶hikari",
@@ -291,7 +291,7 @@ git merge feature-login
     title: "深入理解JavaScript异步：从回调到Async/Await",
     excerpt:
       "JavaScript是单线程的，但它如何处理网络请求等耗时操作而不会卡住页面？本文将带你走过JS异步编程的进化史，彻底理解异步的魅力。",
-    image: "images/bg6.jpg",
+    image: "images/bg14.jpg",
     tags: "#JavaScript #异步 #Promise",
     category: "核心",
     author: "三叶hikari",
@@ -302,7 +302,7 @@ git merge feature-login
     title: "SQL核心：一篇搞懂JOIN连接查询",
     excerpt:
       "数据往往分散在不同的表中，如何将它们关联起来？JOIN是关系型数据库的灵魂。本文将用最直观的方式，为你解析各种JOIN的区别和用法。",
-    image: "images/bg6.jpg",
+    image: "images/bg15.jpg",
     tags: "#SQL #Database #后端",
     category: "数据库",
     author: "三叶hikari",
@@ -313,7 +313,7 @@ git merge feature-login
     title: "Vue核心思想：深入响应式原理",
     excerpt:
       "为什么你在Vue中修改了数据，视图就会自动更新？这背后神奇的“响应式系统”是如何工作的？本文将带你一探究竟。",
-    image: "images/bg6.jpg",
+    image: "images/bg16.jpg",
     tags: "#Vue #JavaScript #框架",
     category: "框架",
     author: "三叶hikari",
@@ -325,7 +325,7 @@ git merge feature-login
     title: "Nginx入门：反向代理与负载均衡",
     excerpt:
       "Nginx是高性能的Web服务器，但它更强大的能力在于作为反向代理。本文将解释什么是反向代理，以及如何利用它实现负载均衡和动静分离。",
-    image: "images/bg6.jpg",
+    image: "images/bg17.jpg",
     tags: "#Nginx #后端 #DevOps",
     category: "服务部署",
     author: "三叶hikari",
@@ -337,7 +337,7 @@ git merge feature-login
     title: "Linux常用命令速查手册",
     excerpt:
       "无论是开发还是部署，都离不开与Linux服务器打交道。本文整理了一份最核心、最常用的Linux命令清单，助你提高工作效率。",
-    image: "images/bg6.jpg",
+    image: "images/bg18.jpg",
     tags: "#Linux #Shell #DevOps",
     category: "基础",
     author: "三叶hikari",
@@ -347,7 +347,7 @@ git merge feature-login
   "ssm-microservice": {
     title: "SSM微服务：构建健壮的Java后端服务",
     excerpt: "Spring + SpringMVC + MyBatis，这个被誉为“上古卷轴”的经典组合，在微服务时代依然宝刀未老。本文将带你了解如何用SSM构建一个清晰、高效的微服务。",
-    image: "images/bg6.jpg",
+    image: "images/bg19.jpg",
     tags: "#Java #Spring #MyBatis #后端",
     category: "微服务",
     author: "三叶hikari",
@@ -358,7 +358,7 @@ git merge feature-login
     title: "CSS预处理器：Sass与Less入门",
     excerpt:
       "原生CSS在编写大型项目时会变得重复和难以维护。CSS预处理器为此而生，它为CSS引入了变量、嵌套、混入等编程特性，让你的样式表更强大。",
-    image: "images/bg6.jpg",
+    image: "images/bg22.jpg",
     tags: "#CSS #Sass #Less",
     category: "核心",
     author: "三叶hikari",
@@ -370,7 +370,7 @@ git merge feature-login
     title: "MySQL性能优化：索引的奥秘",
     excerpt:
       "为什么一个SQL查询有时快如闪电，有时又慢如蜗牛？答案往往在于是否正确地使用了索引。本文将带你理解索引的本质，以及如何创建和使用它。",
-    image: "images/bg6.jpg",
+    image: "images/bg23.jpg",
     tags: "#MySQL #数据库 #性能",
     category: "数据库",
     author: "三叶hikari",
@@ -382,7 +382,7 @@ git merge feature-login
     title: "微服务架构：API网关的核心角色",
     excerpt:
       "在微服务架构中，客户端如何与成百上千个服务打交道？API网关正是这个问题的答案，它作为所有请求的唯一入口，承担着路由、认证、监控等关键职责。",
-    image: "images/bg6.jpg",
+    image: "images/bg24.jpg",
     tags: "#微服务 #架构 #后端",
     category: "微服务",
     author: "三叶hikari",
@@ -394,7 +394,7 @@ git merge feature-login
     title: "HTTP协议核心：Web世界的通用语",
     excerpt:
       "从浏览网页到调用API，我们无时无刻不在使用HTTP。但你真的了解这个Web世界的“通用语言”吗？本文将带你回顾HTTP的核心概念。",
-    image: "images/bg6.jpg",
+    image: "images/bg25.jpg",
     tags: "#HTTP #网络 #基础",
     category: "基础",
     author: "三叶hikari",

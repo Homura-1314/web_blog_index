@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <link rel="stylesheet" href="lib/prism/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="lib/aplayer/APlayer.min.css">
     <link rel="icon" href="images/logo.png">
 </head>
 <body id="page-article">
@@ -35,12 +35,23 @@
         </nav>
     </header>
     
-    <main>
-        <section class="article-hero-banner"></section>
-        <div class="article-wrapper">
-            <!-- JS 填充区 -->
-        </div>
-    </main>
+    <!-- ✨ 全新：页面主容器，采用双列布局 ✨ -->
+    <div class="article-page-container">
+    
+        <!-- ✨ 全新：左侧文章导航侧边栏 ✨ -->
+        <aside class="article-sidebar">
+            <h3 class="sidebar-title">所有文章</h3>
+            <nav id="sidebar-article-list" class="sidebar-nav"></nav>
+        </aside>
+    
+        <!-- ✨ 原有的文章内容区，现在作为右侧主内容区 ✨ -->
+        <main class="article-main-content">
+            <div class="article-hero-banner"></div>
+            <div class="article-wrapper">
+                <!-- 文章内容将由JS动态填充到这里 -->
+            </div>
+        </main>
+    </div>
 
     <footer>
         <p>© 2025 三叶hikari | 三叶✨次元</p>
