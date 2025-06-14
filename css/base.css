@@ -1,8 +1,5 @@
 /* 引入字体和图标 */
 @import url('../lib/google-fonts/fonts.css');
-/* 引入字体和图标
-@import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Poppins:wght@400;500;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'); */
 @import url('../lib/fontawesome/all.min.css');
 /* 全局颜色和主题变量 */
 :root {
@@ -11,7 +8,6 @@
     --gradient-start: #3A61E2;
     --gradient-end: #D439E8;
 }
-
 /* 基础设置 */
 body {
     --text-color: #1a1a1a;

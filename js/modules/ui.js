@@ -65,94 +65,60 @@ export function Effect(){
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
         });
     });
-
-    // 4. 打字机效果
-    const typewriterElement = document.getElementById("hero-subtitle");
-    if (typewriterElement) {
-        const text = "欢迎来到我的知识空间~";
-        let index = 0;
-        function type() {
-            if (index < text.length) {
-                typewriterElement.textContent += text.charAt(index);
-                index++;
-                setTimeout(type, 120);
-            }
-        }
-        type();
-    }
 }
 
 export function music_player() {
-  const aplayerContainer = document.getElementById("aplayer");
-  if (!aplayerContainer || typeof APlayer === "undefined") {
+  const initialContainer = document.getElementById("aplayer");
+  if (!initialContainer || typeof APlayer === "undefined") {
     return;
   }
-
-  aplayerContainer.innerHTML =
+  initialContainer.innerHTML =
     '<p style="text-align:center; color: var(--text-color-secondary); padding: 20px;">正在从次元云加载音乐...</p>';
-
   const metingApiUrl =
     "https://api.i-meto.com/meting/api?server=netease&type=playlist&id=7747893098";
-
   const init_music = async () => {
     try {
       const response = await fetchWithTimeout(metingApiUrl, { timeout: 8000 });
       if (!response.ok)
         throw new Error(`HTTP error status: ${response.status}`);
-
       const data = await response.json();
       if (!data || data.length === 0) throw new Error("API返回的播放列表为空");
-
-      aplayerContainer.innerHTML = "";
+      const finalContainerCheck = document.getElementById("aplayer");
+      if (!finalContainerCheck) {
+        return;
+      }
+      finalContainerCheck.innerHTML = "";
 
       const ap = new APlayer({
-        container: aplayerContainer,
+        container: finalContainerCheck,
         fixed: true,
         lrcType: 3,
         audio: data,
         autoplay: false,
       });
-
-      // --- ✨ 这是本次修复的核心：全新的、基于事件链的状态恢复逻辑 ✨ ---
-
       const lastState = JSON.parse(sessionStorage.getItem("aplayerState"));
-
+      let isRestoring = false;
       if (
         lastState &&
         typeof lastState.index === "number" &&
         lastState.index < data.length
       ) {
-        // 步骤1: 切换到正确的歌曲。这是我们唯一需要立即执行的操作。
+        isRestoring = true;
         ap.list.switch(lastState.index);
-
-        // 步骤2: 定义一个一次性的'loadeddata'事件监听器。
-        // 当新歌曲的数据加载完毕后，这个监听器会被触发。
-        const onLoadedData = () => {
-          // 步骤3: 在数据加载后，我们现在可以安全地设置播放时间。
+      }
+      ap.on("loadeddata", () => {
+        if (isRestoring) {
           ap.seek(lastState.time);
-
-          // 步骤4: 移除这个一次性的监听器，防止它再次触发。
-          ap.off("loadeddata", onLoadedData);
-        };
-
-        // 步骤5: 定义一个一次性的'seeked'事件监听器。
-        // 当ap.seek()操作完成，播放头成功跳转后，这个监听器会被触发。
-        const onSeeked = () => {
-          // 步骤6: 在跳转完成后，我们现在可以安全地恢复播放状态。
+        }
+      });
+      ap.on("seeked", () => {
+        if (isRestoring) {
           if (lastState.isPlaying) {
             ap.play();
           }
-
-          // 步骤7: 同样，移除这个一次性的监听器。
-          ap.off("seeked", onSeeked);
-        };
-
-        // 步骤8: 绑定这两个一次性的监听器。
-        ap.on("loadeddata", onLoadedData);
-        ap.on("seeked", onSeeked);
-      }
-
-      // 保存状态的逻辑保持不变
+          isRestoring = false;
+        }
+      });
       const savePlayerState = () => {
         if (ap.audio && ap.audio.HAVE_CURRENT_DATA) {
           const state = {
@@ -164,17 +130,18 @@ export function music_player() {
           sessionStorage.setItem("aplayerState", JSON.stringify(state));
         }
       };
-
       ap.on("play", savePlayerState);
       ap.on("pause", savePlayerState);
       ap.on("timeupdate", savePlayerState);
       window.addEventListener("beforeunload", savePlayerState);
     } catch (error) {
       console.error("获取音乐播放列表失败:", error);
-      aplayerContainer.innerHTML = `<p style="text-align:center; color: #E74C3C; padding: 20px;">歌曲加载失败 >_<</p>`;
+      const errorContainer = document.getElementById("aplayer");
+      if (errorContainer) {
+        errorContainer.innerHTML = `<p style="text-align:center; color: #E74C3C; padding: 20px;">歌曲加载失败 >_<</p>`;
+      }
     }
   };
-
   init_music();
 }
 export function initArticleFilter() {
@@ -343,4 +310,21 @@ export function showCustomAlert(message, title = "提示") {
     };
     document.addEventListener("keydown", handleEsc);
   });
+}
+export function initTypewriter() {
+  const typewriterElement = document.querySelector(".hero-subtitle");
+  if (typewriterElement) {
+    const text = typewriterElement.textContent; // 从HTML中获取预设的文本
+    typewriterElement.textContent = ""; // 清空原有文本，准备打字
+    let index = 0;
+    function type() {
+      if (index < text.length) {
+        typewriterElement.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, 120); // 打字速度，你可以调整这个值
+      }
+    }
+    // 使用一个小的延迟，确保在页面其他元素渲染后开始打字
+    setTimeout(type, 500);
+  }
 }

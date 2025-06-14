@@ -44,7 +44,6 @@ async function preloadImages(urls, callback) {
         });
 
         let currentImageIndex = 0;
-
         // 立即显示第一张图
         slides[currentImageIndex].classList.add("active");
 
@@ -58,11 +57,9 @@ async function preloadImages(urls, callback) {
 
             const lastSlide = slides[lastImageIndex];
             const nextSlide = slides[nextImageIndex];
-
             // 1. 将上一张图标记为 'previous'，让它留在原地作为背景
             lastSlide.classList.remove("active");
             lastSlide.classList.add("previous");
-
             // 2. 激活下一张图的动画，它会覆盖在上一张图之上
             nextSlide.classList.remove("previous");
             nextSlide.classList.add("active");

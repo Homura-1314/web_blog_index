@@ -18,7 +18,6 @@ function createHeroArticleHTML(key, article) {
 
 function createArticleCardHTML(key, article) {
   if (!article) return "";
-  const imageUrl = article.image || "images/bg4.jpg";
   const title = article.title || "无标题文章";
   const excerpt = article.excerpt || "暂无描述...";
   const author = article.author || "匿名作者";
@@ -38,7 +37,7 @@ function createArticleCardHTML(key, article) {
   return `
         <a href="${html_url}" class="article-card" data-category="${category}">
             <div class="card-image-container">
-                <img src="images/placeholder.gif" data-src="${imageUrl}" alt="${title}" class="lazy-load">
+                <div class="lazy-image" data-topic-key="${key}"></div>
             </div>
             <div class="card-content">
                 <div class="card-tags-container">
@@ -48,13 +47,14 @@ function createArticleCardHTML(key, article) {
                 <h3>${title}</h3>
                 <p class="card-excerpt">${excerpt}</p>
                 <div class="card-meta">
-                    <img src="images/avatar.png" alt="${author}">
+                    <img src="/images/avatar.png" alt="${author}">
                     <span>${author} · ${date}</span>
                 </div>
             </div>
         </a>
     `;
 }
+
 export function post_data() {
   const articleKeys = Object.keys(articles);
   if (articleKeys.length === 0) return;
@@ -62,6 +62,7 @@ export function post_data() {
   const recommendedGrid = document.getElementById("recommended-article-grid");
   const fullGrid = document.getElementById("full-article-grid");
   const filterBar = document.getElementById("filter-bar");
+
   if (heroContainer) {
     const heroArticleKey = articleKeys[0];
     heroContainer.innerHTML = createHeroArticleHTML(
@@ -151,13 +152,10 @@ export function handleAuth() {
 export function renderArticlePage() {
   const banner = document.querySelector(".article-hero-banner");
   const articleWrapper = document.querySelector(".article-wrapper");
-
   // 只检查容器是否存在
   if (!banner || !articleWrapper) {
     return;
   }
-
-  // ✨ 关键修复：在渲染新内容之前，总是先清空旧的内容 ✨
   articleWrapper.innerHTML = "";
 
   const params = new URLSearchParams(window.location.search);
@@ -183,7 +181,6 @@ export function renderArticlePage() {
         `;
     // 确保代码高亮在内容插入后执行
     if (typeof Prism !== "undefined") {
-      // Prism.highlightAll() 可能在SPA导航中不可靠，我们需要更精确的方式
       const codeElements = articleWrapper.querySelectorAll("pre code");
       codeElements.forEach((el) => {
         Prism.highlightElement(el);
@@ -202,7 +199,6 @@ export function renderArticlePage() {
         `;
   }
 }
-// ✨ 全新：填充文章侧边栏的函数
 export function populateArticleSidebar() {
   const sidebarList = document.getElementById("sidebar-article-list");
   if (!sidebarList) return;
@@ -211,7 +207,6 @@ export function populateArticleSidebar() {
   for (const key in articles) {
     if (key === "project-intro") continue;
     const article = articles[key];
-    // ✨ 关键：为 a 标签添加 data-topic="${key}" 属性
     html += `<a href="article.html?topic=${key}" data-topic="${key}">${article.title}</a>`;
   }
   sidebarList.innerHTML = html;

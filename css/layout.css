@@ -11,7 +11,6 @@ header {
     border-bottom: 1px solid var(--border-color);
     transition: background-color 0.3s;
 }
-
 /* 导航栏在滚动后可以变色，增加体验 */
 header.scrolled {
     background: rgba(29, 35, 42, 0.85); /* 半透明背景 */
@@ -61,7 +60,7 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 .article-page-container {
-    display: flex; /* 启动 Flexbox 布局 */
+    display: flex;
     padding-top: 80px; /* 为顶部的固定导航栏留出空间 */
 }
 

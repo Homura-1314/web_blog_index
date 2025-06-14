@@ -499,7 +499,6 @@ a.article-card:hover .card-image-container::after {
     align-items: center;
     justify-content: center;
     z-index: 1000; /* 确保在最顶层 */
-    
     /* 初始状态：不可见，不可交互 */
     opacity: 0;
     pointer-events: none;
@@ -987,7 +986,6 @@ body:not(.dark-theme) .editor-selection-content h3 {
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 }
 .article-sidebar {
-    /* ✨ 关键：使用 position: sticky; 替换 position: fixed; ✨ */
     position: sticky; 
     top: 80px; /* 当侧边栏滚动到距离视窗顶部80px时，开始“粘”住 */
     
@@ -997,8 +995,6 @@ body:not(.dark-theme) .editor-selection-content h3 {
     padding: 1.5rem;
     overflow-y: auto;
     transition: background-color 0.3s, border-color 0.3s;
-    
-    /* 注意：因为我们不再使用 fixed 布局，所以 left: 0; 已经不再需要，可以删除 */
 }
 
 .sidebar-title {
@@ -1032,8 +1028,6 @@ body:not(.dark-theme) .editor-selection-content h3 {
     background-color: var(--hover-bg-color);
     color: var(--text-color);
 }
-
-/* ✨ 当前正在阅读的文章链接，会有醒目的高亮样式 ✨ */
 .sidebar-nav a.active {
     background-color: var(--primary-color-light);
     color: var(--primary-color);
@@ -1093,15 +1087,22 @@ body:not(.dark-theme) .editor-selection-content h3 {
     padding-bottom: 1rem;
     text-align: center;
 }
-img.lazy-load {
-    /* 初始状态：模糊且透明 */
-    filter: blur(5px);
-    opacity: 0;
-    transition: filter 0.5s, opacity 0.5s;
+/* 图片容器的通用样式 */
+.card-image-container {
+    height: 200px;
+    background-color: var(--card-bg-color); /* 添加一个占位背景色 */
 }
-
-img.loaded {
-    /* 加载完成后的状态：清晰且不透明 */
-    filter: blur(0);
+/* 懒加载图片占位符的样式 */
+.lazy-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    /* 初始状态：透明 */
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out; /* 只对透明度进行过渡 */
+}
+/* 加载完成后的状态：不透明 */
+.lazy-image.loaded {
     opacity: 1;
 }
