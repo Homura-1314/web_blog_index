@@ -1,8 +1,8 @@
 ## 基于h5、css、js的个人网页
 
-### 直接下载源代码部署即可
+### 直接下载code部署即可
 
-### 有个基于UglifyJS和cssnano工具压缩的版本，在Releases也能找到
+### 基于UglifyJS和cssnano工具压缩的版本，在Releases找到
 
 ## 文件条目说明
 
