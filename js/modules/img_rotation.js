@@ -12,41 +12,50 @@ async function preloadImages(urls, callback) {
         };
     });
 }
-  export function init_img_rotion() {
-    const slideshowContainer = document.getElementById("slideshow-container");
+export async function init_img_rotion() {
+  const slideshowContainer = document.getElementById("slideshow-container");
   if (slideshowContainer) {
-    const totalImages = 27; // 图片总数
-    const displayDuration = 15000; // 每张图片显示时长
-    let images = [];
-    for (let i = 1; i <= totalImages; i++) {
-      images.push(`images/bg${i}.jpg`);
-    }
-    const shuffle = () => {
-      // 从数组末尾开始向前遍历
-      for (let i = images.length - 1; i > 0; i--) {
-        // 1. 生成一个从 0 到 i (包含 i) 的随机索引
-        const j = Math.floor(Math.random() * (i + 1));
-        // 2. 交换当前元素 array[i] 和随机选中的元素 array[j]
-        [images[i], images[j]] = [images[j], images[i]];
+    async function getRandomImage() {
+      const targetUrl = "https://www.loliapi.com/acg/pc/";
+      try {
+        const response = await fetch(targetUrl)
+        if (response) {
+          return response.url; // 返回图片URL
+        } else {
+          throw new Error("API返回错误状态码");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        throw error;
       }
-      return images; // 返回被打乱的数组
-    };
-    const shuffle_images = shuffle(images)
-    preloadImages(shuffle_images, () => {
-      if (shuffle_images.length > 0) {
-        const slides = [];
-        shuffle_images.forEach((src) => {
-          const slide = document.createElement("div");
-          slide.className = "slide";
-          slide.style.backgroundImage = `url(${src})`;
-          slideshowContainer.appendChild(slide);
-          slides.push(slide);
-        });
-
+    }
+    const number = 10; // 图片申请的数量
+    const displayDuration = 20000; // 每张图片显示时长
+    let Images_list = []
+    const slides = [];
+    for (let i = 0; i < number; i++){
+      try {
+        const imageUrl = await getRandomImage();
+        Images_list.push(imageUrl);
+        if (Images_list.length > 0) {
+          Images_list.forEach((src) => {
+            const slide = document.createElement("div");
+            slide.className = "slide";
+            slide.style.backgroundImage = `url(${src})`;
+            slideshowContainer.appendChild(slide);
+            slides.push(slide);
+          });
+          slides[0].classList.add("active"); // 立即显示第一张图
+        }
+        // 添加延迟避免请求过于频繁
+        await new Promise(resolve => setTimeout(resolve, 450));
+    } catch (error) {
+        console.error(`获取第 ${i + 1} 张图片失败:`, error);
+    } // 获取20个随机图片
+    }
+    preloadImages(Images_list, () => {
+      if (Images_list.length > 0) {
         let currentImageIndex = 0;
-        // 立即显示第一张图
-        slides[currentImageIndex].classList.add("active");
-
         if (slides.length > 1) {
           setInterval(() => {
             const lastImageIndex = currentImageIndex;
@@ -54,7 +63,6 @@ async function preloadImages(urls, callback) {
             do {
               nextImageIndex = Math.floor(Math.random() * slides.length);
             } while (nextImageIndex === currentImageIndex);
-
             const lastSlide = slides[lastImageIndex];
             const nextSlide = slides[nextImageIndex];
             // 1. 将上一张图标记为 'previous'，让它留在原地作为背景
@@ -68,7 +76,6 @@ async function preloadImages(urls, callback) {
                 slide.classList.remove("previous");
               }
             });
-
             currentImageIndex = nextImageIndex;
           }, displayDuration);
         }
