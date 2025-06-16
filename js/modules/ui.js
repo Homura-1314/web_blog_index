@@ -32,7 +32,7 @@ export function theme_init(){
         });
     }
     // 3. 初始化主题：检查localStorage中保存的用户偏好
-    const savedTheme = localStorage.getItem('theme') || 'light'; // 默认亮色主题
+    const savedTheme = localStorage.getItem('theme') || 'dark'; // 默认黑色主题
     setTheme(savedTheme);
 }
 
