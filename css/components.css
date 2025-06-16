@@ -1,12 +1,12 @@
 /* --- 导航内组件 --- */
 nav a.logo { 
     font-size: 1.8rem; 
-    color: var(--text-color); /* ✨ 修改 */
+    color: var(--text-color);
     text-shadow: 0 0 8px var(--primary-color); 
 }
 nav .nav-links { flex-grow: 1; text-align: center; }
 nav .nav-links a { 
-    color: var(--text-color); /* ✨ 修改 */
+    color: var(--text-color);
     text-decoration: none; 
     margin: 0 1.5rem; 
     font-weight: 600; 

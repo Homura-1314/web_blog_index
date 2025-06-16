@@ -17,6 +17,7 @@ web_blog_index/
 │   └── modules # 存放js模块
 │       └── data_basa # 项目的核心数据源
 │       └── date # 数据渲染模块
+│       └── handorTopic # 文章和列表渲染模块
 │       └── Hitokoto # 封装api异步请求模块
 │       └── img_rotation # 背景特效轮换模块
 │       └── lazy-load # 赖加载处理模块
