@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
   const pageId = document.body.id;
-  // 根据页面ID，精确调用所需函数
+  // 根据页面ID，调用所需函数
   switch (pageId) {
     case "page-index":
       Effect();

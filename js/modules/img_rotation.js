@@ -12,6 +12,13 @@ async function preloadImages(urls, callback) {
         };
     });
 }
+function Traverse(slides, src, slideshowContainer) {
+  const slide = document.createElement("div");
+  slide.className = "slide";
+  slide.style.backgroundImage = `url(${src})`;
+  slideshowContainer.appendChild(slide);
+  slides.push(slide);
+}
 export async function init_img_rotion() {
   const slideshowContainer = document.getElementById("slideshow-container");
   if (slideshowContainer) {
@@ -37,49 +44,49 @@ export async function init_img_rotion() {
       try {
         const imageUrl = await getRandomImage();
         Images_list.push(imageUrl);
-        if (Images_list.length > 0) {
-          Images_list.forEach((src) => {
-            const slide = document.createElement("div");
-            slide.className = "slide";
-            slide.style.backgroundImage = `url(${src})`;
-            slideshowContainer.appendChild(slide);
-            slides.push(slide);
-          });
-          slides[0].classList.add("active"); // 立即显示第一张图
+        if (Images_list.length == 1) {
+            const src = Images_list[0];
+            Traverse(slides, src, slideshowContainer);
+            slides[0].classList.add("active"); // 立即显示第一张图
         }
         // 添加延迟避免请求过于频繁
         await new Promise(resolve => setTimeout(resolve, 450));
     } catch (error) {
         console.error(`获取第 ${i + 1} 张图片失败:`, error);
-    } // 获取20个随机图片
-    }
-    preloadImages(Images_list, () => {
-      if (Images_list.length > 0) {
-        let currentImageIndex = 0;
-        if (slides.length > 1) {
-          setInterval(() => {
-            const lastImageIndex = currentImageIndex;
-            let nextImageIndex;
-            do {
-              nextImageIndex = Math.floor(Math.random() * slides.length);
-            } while (nextImageIndex === currentImageIndex);
-            const lastSlide = slides[lastImageIndex];
-            const nextSlide = slides[nextImageIndex];
-            // 1. 将上一张图标记为 'previous'，让它留在原地作为背景
-            lastSlide.classList.remove("active");
-            lastSlide.classList.add("previous");
-            // 2. 激活下一张图的动画，它会覆盖在上一张图之上
-            nextSlide.classList.remove("previous");
-            nextSlide.classList.add("active");
-            slides.forEach((slide, index) => {
-              if (index !== lastImageIndex && index !== nextImageIndex) {
-                slide.classList.remove("previous");
-              }
-            });
-            currentImageIndex = nextImageIndex;
-          }, displayDuration);
-        }
       }
-    });
+    }
+    if (Images_list.length > 1) {
+      Images_list.filter((src,index) => index > 1).forEach((src) => {
+        Traverse(slides, src, slideshowContainer);
+      })
+    }
+      preloadImages(Images_list, () => {
+        if (Images_list.length > 0) {
+          let currentImageIndex = 0;
+          if (slides.length > 1) {
+            setInterval(() => {
+              const lastImageIndex = currentImageIndex;
+              let nextImageIndex;
+              do {
+                nextImageIndex = Math.floor(Math.random() * slides.length);
+              } while (nextImageIndex === currentImageIndex);
+              const lastSlide = slides[lastImageIndex];
+              const nextSlide = slides[nextImageIndex];
+              // 1. 将上一张图标记为 'previous'，让它留在原地作为背景
+              lastSlide.classList.remove("active");
+              lastSlide.classList.add("previous");
+              // 2. 激活下一张图的动画，它会覆盖在上一张图之上
+              nextSlide.classList.remove("previous");
+              nextSlide.classList.add("active");
+              slides.forEach((slide, index) => {
+                if (index !== lastImageIndex && index !== nextImageIndex) {
+                  slide.classList.remove("previous");
+                }
+              });
+              currentImageIndex = nextImageIndex;
+            }, displayDuration);
+          }
+        }
+      });
   }
 }
